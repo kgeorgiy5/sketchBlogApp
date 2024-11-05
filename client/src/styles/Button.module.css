@@ -1,0 +1,26 @@
+.default-button {
+  padding: 2rem;
+  background-color: red;
+  cursor: pointer;
+}
+
+.default-button:active,
+.default-button:hover {
+  background-color: black;
+  color: white
+}
+
+.navbar-button {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.navbar-button:active,
+.navbar-button:hover {
+  text-decoration: underline;
+}
+
+.navbar-button--highlighted {
+  color: yellow;
+}
