@@ -1,0 +1,35 @@
+.auth-body {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  z-index: 30;
+  inset: calc((100% - 80%) / 2);
+  box-sizing: border-box;
+
+  background: white;
+  border-radius: 2rem;
+  padding: 2rem;
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.close-button {
+  position: absolute;
+  padding: 0.3rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 100%;
+  right: 0;
+  top: 0;
+  transition-delay: 75ms;
+  transition-duration: 150ms;
+}
+
+.close-button:active,
+.close-button:hover {
+  background-color: lightgray;
+}
