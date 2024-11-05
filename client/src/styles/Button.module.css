@@ -1,26 +1,27 @@
-.default-button {
+.button-default {
   padding: 2rem;
   background-color: red;
   cursor: pointer;
 }
 
-.default-button:active,
-.default-button:hover {
+.button-default:active,
+.button-default:hover {
   background-color: black;
   color: white
 }
 
-.navbar-button {
+.button-navbar {
   border: none;
   background-color: inherit;
   cursor: pointer;
 }
 
-.navbar-button:active,
-.navbar-button:hover {
+.button-navbar:active,
+.button-navbar:hover {
   text-decoration: underline;
 }
 
-.navbar-button--highlighted {
+.button-navbar--highlighted {
+  composes: button-navbar;
   color: yellow;
 }

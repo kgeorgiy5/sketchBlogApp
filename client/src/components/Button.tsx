@@ -1,16 +1,15 @@
 import IButtonProps from "../types/IButtonProps";
-import getButtonVariant from "../utils/getButtonVariant";
+import styles from "../styles/Button.module.css";
 
 const Button = ({ children, onClick, variant }: IButtonProps) => {
 
-  const classes: string = getButtonVariant(variant);
 
   const buttonClickHandler = () => {
     onClick();
   }
 
   return (
-    <button className={classes} onClick={buttonClickHandler} >
+    <button className={styles[variant]} onClick={buttonClickHandler} >
       {children}
     </button >
   )
