@@ -1,14 +1,10 @@
 .button-default {
-  padding: 2rem;
-  background-color: red;
   cursor: pointer;
+  width: 100%;
 }
 
 .button-default:active,
-.button-default:hover {
-  background-color: black;
-  color: white
-}
+.button-default:hover {}
 
 .button-navbar {
   border: none;

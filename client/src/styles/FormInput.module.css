@@ -1,0 +1,28 @@
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.label {
+  font-weight: 500;
+}
+
+.input-block {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  gap: 0.5rem;
+}
+
+.input-field {
+  width: 100%;
+}
+
+.show-password-button {
+  cursor: pointer;
+}
