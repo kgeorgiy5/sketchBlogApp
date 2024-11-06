@@ -2,5 +2,7 @@ import { inputChangeCallbackType } from "./callbackTypes";
 
 export default interface IFormInputProps {
   label: string,
-  onChange: inputChangeCallbackType
+  onChange: inputChangeCallbackType,
+  isPassword?: boolean,
+  isEmail?: boolean,
 }

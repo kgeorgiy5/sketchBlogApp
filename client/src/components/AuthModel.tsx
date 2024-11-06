@@ -32,34 +32,36 @@ const AuthModel = ({ onClose }: IAuthModelProps) => {
     setConfirmPassword(e);
   }
 
+  const handleSubmit = () => {
+    console.log(email, password, confirmPassword);
+  }
+
   return (
     <>
       <div className={` ${styles["auth-body"]} roll-out`}>
         <main className={styles["main"]}>
           <IoIosClose className={styles["close-button"]} onClick={closeModelHandler} />
           {isRegistration ? (
-            <>
+            <form className={styles["form"]}>
               <h1 className={styles["main-title"]}>Registration</h1>
-              <form className={styles["form"]}>
-                <FormInput label="Email" onChange={(e) => emailInputHandler(e)} />
-                <FormInput label="Password" onChange={(e) => passwordInputHandler(e)} />
-                <FormInput label="Confirm password" onChange={(e) => confirmPasswordInputHandler(e)} />
-              </form>
+              <FormInput isEmail={true} label="Email" onChange={(e) => emailInputHandler(e)} />
+              <FormInput isPassword={true} label="Password" onChange={(e) => passwordInputHandler(e)} />
+              <FormInput isPassword={true} label="Confirm password" onChange={(e) => confirmPasswordInputHandler(e)} />
               <div className={styles["toggle-block"]}>
-                <Button onClick={toggleRegistrationHandler} variant="">Already have an account? Sign in!</Button>
+                <Button onClick={handleSubmit} variant="button-default">Submit</Button>
+                <Button onClick={toggleRegistrationHandler} variant="button-default">Already have an account? Sign in!</Button>
               </div>
-            </>
+            </form>
           ) : (
-            <>
+            <form className={styles["form"]}>
               <h1 className={styles["main-title"]}>Login</h1>
-              <form className={styles["form"]}>
-                <FormInput label="Email" onChange={(e) => emailInputHandler(e)} />
-                <FormInput label="Password" onChange={(e) => passwordInputHandler(e)} />
-              </form>
+              <FormInput isPassword={false} label="Email" onChange={(e) => emailInputHandler(e)} />
+              <FormInput isPassword={true} label="Password" onChange={(e) => passwordInputHandler(e)} />
               <div className={styles["toggle-block"]}>
-                <Button onClick={toggleRegistrationHandler} variant="">Do not have an account? Sign up!</Button>
+                <Button onClick={handleSubmit} variant="button-default">Submit</Button>
+                <Button onClick={toggleRegistrationHandler} variant="button-default">Do not have an account? Sign up!</Button>
               </div>
-            </>
+            </form>
           )}
         </main>
       </div>
