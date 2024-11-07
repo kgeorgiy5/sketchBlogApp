@@ -1,6 +1,11 @@
 * {
-  font-family: "Raleway";
+  font-family: "Lexend";
+  --main1: #243642;
+  --main2: #387478;
+  --accent1: #629584;
+  --accent2: #E2F1E7;
 }
+
 
 body {
   margin: 0;

@@ -1,14 +1,15 @@
 .auth-body {
   position: absolute;
-  width: 70%;
-  height: 70%;
+  width: 75%;
+  height: 75%;
   z-index: 30;
-  inset: calc((100% - 70%) / 2);
+  inset: calc((100% - 75%) / 2);
   box-sizing: border-box;
 
-  background: white;
+  background: var(--main2);
   border-radius: 2rem;
   padding: 2rem;
+  color: var(--accent2);
 }
 
 .main {
@@ -24,6 +25,7 @@
   padding: 0.3rem;
   font-size: 1.5rem;
   cursor: pointer;
+  color: var(--accent2);
   border-radius: 100%;
   right: 0;
   top: 0;
@@ -33,7 +35,7 @@
 
 .close-button:active,
 .close-button:hover {
-  background-color: lightgray;
+  background-color: var(--main1);
 }
 
 .main-title {

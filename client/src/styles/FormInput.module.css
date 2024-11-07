@@ -17,12 +17,26 @@
   flex-direction: row;
   width: 80%;
   gap: 0.5rem;
+  background-color: var(--accent1);
+  border-radius: 0.2rem;
+  overflow: hidden;
+  ;
 }
 
 .input-field {
+  color: var(--main1);
+  background-color: inherit;
+  border: none;
+  height: 1.5rem;
   width: 100%;
 }
 
+.input-field:focus {
+  outline: none;
+}
+
 .show-password-button {
+  color: var(--main1);
+  padding: 0 0.3rem 0rem 0rem;
   cursor: pointer;
 }

@@ -1,5 +1,6 @@
 import { buttonCallbackType } from "./callbackTypes"
 
 export default interface IAuthModelProps {
-  onClose: buttonCallbackType
+  onClose: buttonCallbackType,
+  registration: boolean
 }

@@ -7,8 +7,8 @@ import Button from "./Button";
 import IAuthModelProps from "../types/IAuthModelProps";
 import Backdrop from './Backdrop';
 
-const AuthModel = ({ onClose }: IAuthModelProps) => {
-  const [isRegistration, setIsRegistration] = useState<boolean>(false);
+const AuthModel = ({ onClose, registration = false }: IAuthModelProps) => {
+  const [isRegistration, setIsRegistration] = useState<boolean>(registration);
 
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();

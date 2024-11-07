@@ -1,23 +1,55 @@
 .button-default {
   cursor: pointer;
+
   width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+
+  transition: ease-in-out;
+  transition-delay: 75ms;
+  transition-duration: 150ms;
+
+  border: none;
+  border: solid 2px var(--main1);
+  border-radius: 0.3rem;
+
+  color: var(--main1);
+  background-color: var(--accent2);
+
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .button-default:active,
-.button-default:hover {}
+.button-default:hover {
+  color: var(--accent2);
+  background-color: var(--main1);
+}
 
 .button-navbar {
-  border: none;
-  background-color: inherit;
-  cursor: pointer;
+  composes: button-default;
 }
 
 .button-navbar:active,
 .button-navbar:hover {
-  text-decoration: underline;
+  color: var(--main1);
+  background-color: var(--accent1);
 }
 
 .button-navbar--highlighted {
   composes: button-navbar;
-  color: yellow;
+
+  cursor: default;
+
+  background-color: var(--main1);
+  color: var(--accent1);
+}
+
+.button-navbar--highlighted:active,
+.button-navbar--highlighted:hover {
+  background-color: var(--main1);
+  color: var(--accent1);
 }
