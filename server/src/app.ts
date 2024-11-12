@@ -5,6 +5,7 @@ import { config } from "dotenv-safe";
 
 import postsRoutes from "./routes/posts";
 import authRoutes from "./routes/auth";
+import errorMiddleware from "./middleware/errorMiddleware";
 
 config({ path: ".env", example: ".env" });
 const PORT = process.env.PORT;
@@ -30,6 +31,8 @@ app.use(session({
 
 app.use(postsRoutes);
 app.use(authRoutes);
+
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
