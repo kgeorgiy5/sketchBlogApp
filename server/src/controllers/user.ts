@@ -35,7 +35,6 @@ export const postCreatePost = async (req: Request, res: Response, next: NextFunc
   }
 }
 
-//FIXME:user can add only one like to the post
 export const putUpdatePost = async (req: Request, res: Response, next: NextFunction) => {
   const newPostTitle: string = req.body.title;
   const newPostContent: string = req.body.content;
@@ -93,6 +92,12 @@ export const putLikePost = async (req: Request, res: Response, next: NextFunctio
     if (!user) {
       const err: AppError = new Error("user not found");
       err.statusCode = 401;
+      return next(err);
+    }
+
+    if (user.likedPosts.indexOf(postId) !== -1) {
+      const err: AppError = new Error(`user ${userId} already liked post ${postId}`);
+      err.statusCode = 400;
       return next(err);
     }
 
