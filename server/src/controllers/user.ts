@@ -4,6 +4,19 @@ import Post from "../models/post";
 import User from "../models/user";
 import { AppError } from "../types/error";
 
+export const getUserPosts = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.session.userId;
+
+  try {
+    const userPosts = await Post.find({ userId: userId }) || [];
+
+    return res.status(200).json(userPosts);
+
+  } catch (err) {
+    next(err);
+  }
+}
+
 export const postCreatePost = async (req: Request, res: Response, next: NextFunction) => {
   const postTitle = req.body.title;
   const postContent = req.body.content;
@@ -11,7 +24,6 @@ export const postCreatePost = async (req: Request, res: Response, next: NextFunc
   const userId = req.session.userId;
 
   try {
-
     const newPost = new Post({ title: postTitle, content: postContent, updateDate: postUpdateDate, userId: userId, numberOfLikes: 0 });
 
     await newPost.save();
@@ -31,7 +43,6 @@ export const postUpdatePost = async (req: Request, res: Response, next: NextFunc
   const postId = req.body.id;
 
   try {
-
     const post = await Post.findById(postId);
 
     if (!post) {
