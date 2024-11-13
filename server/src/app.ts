@@ -3,9 +3,9 @@ import session from "express-session";
 import connectMongoDbSession from "connect-mongodb-session";
 import { config } from "dotenv-safe";
 
-import postsRoutes from "./routes/posts";
-import authRoutes from "./routes/auth";
+import routes from "./routes/routes";
 import errorMiddleware from "./middleware/errorMiddleware";
+import mongoose from "mongoose";
 
 config({ path: ".env", example: ".env" });
 const PORT = process.env.PORT;
@@ -29,11 +29,16 @@ app.use(session({
   resave: false
 }))
 
-app.use(postsRoutes);
-app.use(authRoutes);
+app.use("/api", routes);
 
 app.use(errorMiddleware);
 
-app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}`);
+mongoose.connect(MONGODB_URI).then(() => {
+  app.listen(PORT, () => {
+    console.log(`http://localhost:${PORT}`);
+  })
 })
+  .catch(err => {
+    console.log(err);
+  })
+
