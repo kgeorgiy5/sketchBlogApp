@@ -10,7 +10,7 @@ export const getUserPosts = async (req: Request, res: Response, next: NextFuncti
   try {
     const userPosts = await Post.find({ userId: userId }) || [];
 
-    return res.status(200).json(userPosts);
+    res.status(200).json(userPosts);
 
   } catch (err) {
     next(err);
@@ -28,14 +28,14 @@ export const postCreatePost = async (req: Request, res: Response, next: NextFunc
 
     await newPost.save();
 
-    return res.status(200).end();
+    res.status(200).end();
 
   } catch (err) {
     next(err);
   }
 }
 
-export const postUpdatePost = async (req: Request, res: Response, next: NextFunction) => {
+export const putUpdatePost = async (req: Request, res: Response, next: NextFunction) => {
   const newPostTitle: string = req.body.title;
   const newPostContent: string = req.body.content;
   const newPostUpdateDate: Date = new Date();
@@ -67,14 +67,14 @@ export const postUpdatePost = async (req: Request, res: Response, next: NextFunc
 
     await updatedPost.save();
 
-    return res.status(204).end();
+    res.status(204).end();
 
   } catch (err) {
     next(err);
   }
 }
 
-export const postLikePost = async (req: Request, res: Response, next: NextFunction) => {
+export const putLikePost = async (req: Request, res: Response, next: NextFunction) => {
   const postId = req.body.postId;
   const userId = req.session.userId;
 
@@ -95,6 +95,12 @@ export const postLikePost = async (req: Request, res: Response, next: NextFuncti
       return next(err);
     }
 
+    if (user.likedPosts.indexOf(postId) !== -1) {
+      const err: AppError = new Error(`user ${userId} already liked post ${postId}`);
+      err.statusCode = 400;
+      return next(err);
+    }
+
     const updatedPost = post;
     updatedPost.numberOfLikes = post.numberOfLikes + 1;
 
@@ -105,7 +111,7 @@ export const postLikePost = async (req: Request, res: Response, next: NextFuncti
 
     await updatedUser.save();
 
-    return res.status(204).end();
+    res.status(204).end();
 
   } catch (err) {
     next(err);

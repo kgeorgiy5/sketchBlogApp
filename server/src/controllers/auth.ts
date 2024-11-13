@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { hash, compare } from "bcryptjs";
-import { validationResult } from "express-validator";
+import { hash, compare, genSalt } from "bcryptjs";
 
 import User from "../models/user";
 import { AppError } from "../types/error";
@@ -8,16 +7,17 @@ import { AppError } from "../types/error";
 export const postSignUp = async (req: Request, res: Response, next: NextFunction) => {
   const email: string = req.body.email;
   const password: string = req.body.password;
-  const errors = validationResult(req);
+  // const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    const err: AppError = new Error("validation error");
-    err.statusCode = 422;
-    return next(err);
-  }
+  // if (!errors.isEmpty()) {
+  //   const err: AppError = new Error("validation error");
+  //   err.statusCode = 422;
+  //   return next(err);
+  // }
 
   try {
-    const hashedPassword = await hash(password, "salt");
+    const salt = await genSalt(12);
+    const hashedPassword = await hash(password, salt);
     const newUser = new User({
       email: email,
       password: hashedPassword,
@@ -35,7 +35,7 @@ export const postSignUp = async (req: Request, res: Response, next: NextFunction
     req.session.isAuthenticated = true;
     req.session.userId = savedUser._id.toString();
 
-    return res.status(200).end();
+    res.status(200).end();
 
   } catch (err) {
     //FIXME: this code may cause issues with src/middleware/errorMiddleware.ts
@@ -68,7 +68,7 @@ export const postSignIn = async (req: Request, res: Response, next: NextFunction
     req.session.isAuthenticated = true;
     req.session.userId = user._id.toString();
 
-    return res.status(200).end();
+    res.status(200).end();
 
   } catch (err) {
     //FIXME: this code may cause issues with src/middleware/errorMiddleware.ts
