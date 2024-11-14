@@ -1,12 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 
-import Post from "../models/post";
-import { AppError } from "../types/error";
-import { IPost } from "../types/posts";
+import * as postsService from "../services/posts";
 
 export const getAllPosts = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const posts = await Post.find({}) || [];
+    const posts = await postsService.getAllPosts();
 
     res.status(200).json(posts);
 
@@ -19,13 +17,7 @@ export const getPostDetails = async (req: Request, res: Response, next: NextFunc
   try {
     const postId = req.params.id;
 
-    const post: IPost | null = await Post.findById(postId);
-
-    if (!post) {
-      const err: AppError = new Error(`post with id:${postId} not found`);
-      err.statusCode = 500;
-      return next(err);
-    }
+    const post = await postsService.getPostDetails(postId);
 
     res.status(200).json(post);
 
