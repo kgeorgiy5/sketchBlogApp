@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { hash, compare, genSalt } from "bcryptjs";
+import { compare } from "bcryptjs";
 
 import User from "../models/user";
 import { AppError } from "../types/error";
+import { createUser } from "../services/auth";
 
 export const postSignUp = async (req: Request, res: Response, next: NextFunction) => {
   const email: string = req.body.email;
@@ -16,15 +17,7 @@ export const postSignUp = async (req: Request, res: Response, next: NextFunction
   // }
 
   try {
-    const salt = await genSalt(12);
-    const hashedPassword = await hash(password, salt);
-    const newUser = new User({
-      email: email,
-      password: hashedPassword,
-      likedPosts: []
-    });
-
-    const savedUser = await newUser.save();
+    const savedUser = await createUser(email, password);
 
     if (!savedUser) {
       const err: AppError = new Error("error occuered during save operation");
@@ -38,7 +31,6 @@ export const postSignUp = async (req: Request, res: Response, next: NextFunction
     res.status(200).end();
 
   } catch (err) {
-    //FIXME: this code may cause issues with src/middleware/errorMiddleware.ts
     next(err);
   }
 }
