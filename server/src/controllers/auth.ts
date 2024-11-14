@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { compare } from "bcryptjs";
 
-import User from "../models/user";
-import { AppError } from "../types/error";
-import { createUser } from "../services/auth";
+import { createUser, loginUser } from "../services/auth";
 
 export const postSignUp = async (req: Request, res: Response, next: NextFunction) => {
   const email: string = req.body.email;
@@ -18,12 +15,6 @@ export const postSignUp = async (req: Request, res: Response, next: NextFunction
 
   try {
     const savedUser = await createUser(email, password);
-
-    if (!savedUser) {
-      const err: AppError = new Error("error occuered during save operation");
-      err.statusCode = 500;
-      return next(err);
-    }
 
     req.session.isAuthenticated = true;
     req.session.userId = savedUser._id.toString();
@@ -40,22 +31,8 @@ export const postSignIn = async (req: Request, res: Response, next: NextFunction
   const password: string = req.body.password;
 
   try {
-    const user = await User.findOne({ email: email });
 
-    if (!user) {
-      const err: AppError = new Error("No such user");
-      err.statusCode = 422;
-      return next(err);
-    }
-
-    const hashedPassword = user.password;
-    const doMatch = await compare(password, hashedPassword);
-
-    if (!doMatch) {
-      const err: AppError = new Error("wrong password or email");
-      err.statusCode = 422;
-      return next(err);
-    }
+    const user = await loginUser(email, password);
 
     req.session.isAuthenticated = true;
     req.session.userId = user._id.toString();
@@ -63,7 +40,6 @@ export const postSignIn = async (req: Request, res: Response, next: NextFunction
     res.status(200).end();
 
   } catch (err) {
-    //FIXME: this code may cause issues with src/middleware/errorMiddleware.ts
     next(err);
   }
 }
