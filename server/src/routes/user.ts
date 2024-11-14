@@ -1,15 +1,18 @@
 import { Router } from "express";
 
-import * as userControllers from "../controllers/user";
+import * as userController from "../controllers/user";
+import requireAuth from "../middleware/requireAuth";
 
 const router = Router();
 
-router.get("/my-posts", userControllers.getUserPosts);
+router.use(requireAuth);
 
-router.post("/create-post", userControllers.postCreatePost);
+router.get("/my-posts", userController.getUserPosts);
 
-router.put("/edit-post", userControllers.putUpdatePost);
-router.put("/like-post", userControllers.putLikePost);
+router.post("/create-post", userController.postCreatePost);
+
+router.put("/edit-post", userController.putUpdatePost);
+router.put("/like-post", userController.putLikePost);
 
 
 export default router;

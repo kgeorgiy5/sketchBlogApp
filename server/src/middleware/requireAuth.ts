@@ -1,12 +1,18 @@
 import { Request, Response, NextFunction } from "express";
+import { AppError } from "../types/error";
 
 const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   const isAuthenticated = req.session.isAuthenticated;
-  if (!isAuthenticated) {
-    return res.status(401).end();
+  const userId = req.session.userId;
+
+  if (!isAuthenticated || !userId) {
+    const err: AppError = new Error("unauthorized");
+    err.statusCode = 401;
+    return next(err);
   }
 
   next();
+
 };
 
 export default requireAuth;

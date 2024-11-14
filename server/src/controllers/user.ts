@@ -1,14 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 
-import Post from "../models/post";
-import User from "../models/user";
-import { AppError } from "../types/error";
+import * as userService from "../services/user";
 
 export const getUserPosts = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.session.userId;
 
   try {
-    const userPosts = await Post.find({ userId: userId }) || [];
+    const userPosts = await userService.getUserPosts(userId);
 
     res.status(200).json(userPosts);
 
@@ -18,17 +16,13 @@ export const getUserPosts = async (req: Request, res: Response, next: NextFuncti
 }
 
 export const postCreatePost = async (req: Request, res: Response, next: NextFunction) => {
-  const postTitle = req.body.title;
-  const postContent = req.body.content;
-  const postUpdateDate = Date.now();
+  const title = req.body.title;
+  const content = req.body.content;
   const userId = req.session.userId;
 
   try {
-    const newPost = new Post({ title: postTitle, content: postContent, updateDate: postUpdateDate, userId: userId, numberOfLikes: 0 });
-
-    await newPost.save();
-
-    res.status(200).end();
+    const savedPost = await userService.createNewPost(title, content, userId);
+    res.status(200).json(savedPost);
 
   } catch (err) {
     next(err);
@@ -36,38 +30,15 @@ export const postCreatePost = async (req: Request, res: Response, next: NextFunc
 }
 
 export const putUpdatePost = async (req: Request, res: Response, next: NextFunction) => {
-  const newPostTitle: string = req.body.title;
-  const newPostContent: string = req.body.content;
-  const newPostUpdateDate: Date = new Date();
+  const newTitle: string = req.body.title;
+  const newContent: string = req.body.content;
   const userId = req.session.userId;
   const postId = req.body.id;
 
   try {
-    const post = await Post.findById(postId);
+    const savedPost = await userService.updatePost(postId, newTitle, newContent, userId);
 
-    if (!post) {
-      const err: AppError = new Error("post not found")
-      err.statusCode = 404;
-      return next(err);
-    }
-
-    const originalUserId = post.userId.toString();
-
-    if (originalUserId !== userId) {
-      const err: AppError = new Error(`user ${userId} is not authorized to do this action`)
-      err.statusCode = 403;
-      return next(err);
-    }
-
-    //TODO: add interface for updatedPost
-    const updatedPost = post;
-    updatedPost.title = newPostTitle;
-    updatedPost.content = newPostContent;
-    updatedPost.updateDate = newPostUpdateDate;
-
-    await updatedPost.save();
-
-    res.status(204).end();
+    res.status(204).json(savedPost);
 
   } catch (err) {
     next(err);
@@ -79,39 +50,9 @@ export const putLikePost = async (req: Request, res: Response, next: NextFunctio
   const userId = req.session.userId;
 
   try {
-    const post = await Post.findById(postId);
+    const updatedPost = await userService.addLike(postId, userId);
 
-    if (!post) {
-      const err: AppError = new Error("post not found");
-      err.statusCode = 404;
-      return next(err);
-    }
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      const err: AppError = new Error("user not found");
-      err.statusCode = 401;
-      return next(err);
-    }
-
-    if (user.likedPosts.indexOf(postId) !== -1) {
-      const err: AppError = new Error(`user ${userId} already liked post ${postId}`);
-      err.statusCode = 400;
-      return next(err);
-    }
-
-    const updatedPost = post;
-    updatedPost.numberOfLikes = post.numberOfLikes + 1;
-
-    await updatedPost.save();
-
-    const updatedUser = user;
-    updatedUser.likedPosts.push(postId);
-
-    await updatedUser.save();
-
-    res.status(204).end();
+    res.status(204).json(updatedPost);
 
   } catch (err) {
     next(err);
