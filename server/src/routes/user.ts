@@ -1,8 +1,11 @@
 import { Router } from "express";
 
 import * as userController from "../controllers/user";
+import requireAuth from "../middleware/requireAuth";
 
 const router = Router();
+
+router.use(requireAuth);
 
 router.get("/my-posts", userController.getUserPosts);
 
