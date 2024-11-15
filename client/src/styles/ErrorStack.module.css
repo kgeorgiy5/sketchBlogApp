@@ -1,0 +1,10 @@
+.error-stack {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  width: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
