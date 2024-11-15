@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 
 import ErrorPopUp from "./ErrorPopUp";
 import styles from "../styles/ErrorStack.module.css";
+import { complexCallbackType } from "../types/callbackTypes";
 
-const ErrorStack = ({ message }: { message: string }) => {
+const ErrorStack = ({ message, setMessage }: { message: string | undefined, setMessage: complexCallbackType<string> }) => {
 
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -18,6 +19,7 @@ const ErrorStack = ({ message }: { message: string }) => {
       prevState.shift();
       return prevState;
     })
+    setMessage("");
   }
 
   return (

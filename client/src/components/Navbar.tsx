@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/Navbar.module.css";
 import Button from "./Button";
-import AuthForm from "./AuthForm.tsx";
+import AuthForm from "./auth/AuthForm.tsx";
 
 const Navbar = ({ onRedirection }: any) => {
 
