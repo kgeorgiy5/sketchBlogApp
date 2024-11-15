@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/Navbar.module.css";
 import Button from "./Button";
-import AuthModel from "./AuthModel";
+import AuthForm from "./AuthForm.tsx";
 
 const Navbar = ({ onRedirection }: any) => {
 
@@ -61,7 +61,7 @@ const Navbar = ({ onRedirection }: any) => {
       </nav>
       {isAuthShown ? (
         <>
-          <AuthModel registration={isRegistration} onClose={handleAuthModelClose} />
+          <AuthForm registration={isRegistration} onClose={handleAuthModelClose} />
         </>
       ) : null}
     </>

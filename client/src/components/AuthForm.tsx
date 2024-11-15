@@ -4,10 +4,10 @@ import { IoIosClose } from "react-icons/io";
 import styles from "../styles/AuthModel.module.css";
 import FormInput from "./FormInput";
 import Button from "./Button";
-import IAuthModelProps from "../types/IAuthModelProps";
+import IAuthFormProps from "../types/IAuthFormProps";
 import Backdrop from './Backdrop';
 
-const AuthModel = ({ onClose, registration = false }: IAuthModelProps) => {
+const AuthForm = ({ onClose, registration = false }: IAuthModelProps) => {
   const [isRegistration, setIsRegistration] = useState<boolean>(registration);
 
   const [email, setEmail] = useState<string>();
@@ -71,4 +71,4 @@ const AuthModel = ({ onClose, registration = false }: IAuthModelProps) => {
 
 };
 
-export default AuthModel;
+export default AuthForm;
