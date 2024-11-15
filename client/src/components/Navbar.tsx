@@ -2,15 +2,18 @@ import { useState } from "react";
 import styles from "../styles/Navbar.module.css";
 import Button from "./Button";
 import AuthForm from "./auth/AuthForm.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Navbar = ({ onRedirection }: any) => {
+const Navbar = () => {
+  const currentPath = useLocation().pathname;
+  const navigate = useNavigate();
 
   const [isAuthShown, setIsAuthShown] = useState<boolean>(false);
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isRegistration, setIsRegistration] = useState<boolean>(false);
 
   const navigationButtonHandler = (path: string) => {
-
+    navigate(`/${path}`);
   }
 
   const handleSignInButton = () => {
@@ -42,9 +45,9 @@ const Navbar = ({ onRedirection }: any) => {
         </div>
         <div className={styles["navbar-buttons"]}>
           <div className={styles["redirect-buttons"]}>
-            <Button variant="button-navbar--highlighted" onClick={() => navigationButtonHandler("feed")} >Feed</Button>
-            <Button variant="button-navbar" onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
-            <Button variant="button-navbar" onClick={() => navigationButtonHandler("my-posts")}>Write a new post</Button>
+            <Button variant={`${currentPath === "/feed" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("feed")} >Feed</Button>
+            <Button variant={`${currentPath === "/my-posts" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
+            <Button variant={`${currentPath === "/sketch" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("sketch")}>Sketch</Button>
           </div>
           <div className={styles["auth-buttons"]}>
             {isLogged ? (
