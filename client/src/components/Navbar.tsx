@@ -45,7 +45,7 @@ const Navbar = () => {
         </div>
         <div className={styles["navbar-buttons"]}>
           <div className={styles["redirect-buttons"]}>
-            <Button variant={`${currentPath === "/feed" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("feed")} >Feed</Button>
+            <Button variant={`${currentPath === "/" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("")} >Feed</Button>
             <Button variant={`${currentPath === "/my-posts" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
             <Button variant={`${currentPath === "/sketch" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("sketch")}>Sketch</Button>
           </div>
