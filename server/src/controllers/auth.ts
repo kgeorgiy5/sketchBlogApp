@@ -43,3 +43,9 @@ export const postSignIn = async (req: Request, res: Response, next: NextFunction
     next(err);
   }
 }
+
+export const postLogout = async (req: Request, res: Response, next: NextFunction) => {
+  req.session.destroy(() => {
+    res.status(200).end();
+  });
+}
