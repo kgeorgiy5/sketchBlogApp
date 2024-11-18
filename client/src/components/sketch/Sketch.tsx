@@ -1,7 +1,9 @@
+import SketchCanvas from "./SketchCanvas";
+
 const Sketch = () => {
   return (
     <>
-      Sketch
+      <SketchCanvas />
     </>
   )
 };
