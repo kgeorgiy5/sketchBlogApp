@@ -1,0 +1,6 @@
+.canvas {
+  width: 40%;
+  aspect-ratio: 1;
+  border: 1px solid black;
+  cursor: crosshair;
+}
