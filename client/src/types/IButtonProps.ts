@@ -4,7 +4,8 @@ import { buttonCallbackType } from "./callbackTypes";
 interface IButtonProps {
   children: ReactNode,
   onClick: buttonCallbackType,
-  variant: string
+  variant: string,
+  disabled?: boolean
 }
 
 export default IButtonProps;

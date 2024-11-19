@@ -1,7 +1,7 @@
 import IButtonProps from "../types/IButtonProps";
 import styles from "../styles/Button.module.css";
 
-const Button = ({ children, onClick, variant }: IButtonProps) => {
+const Button = ({ children, onClick, variant, disabled = false }: IButtonProps) => {
 
 
   const buttonClickHandler = () => {
@@ -9,7 +9,7 @@ const Button = ({ children, onClick, variant }: IButtonProps) => {
   }
 
   return (
-    <button className={styles[variant]} onClick={buttonClickHandler} >
+    <button className={styles[variant]} onClick={buttonClickHandler} disabled={disabled} >
       {children}
     </button >
   )
