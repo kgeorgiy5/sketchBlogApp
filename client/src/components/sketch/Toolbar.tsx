@@ -70,12 +70,19 @@ const Toolbar: FC<IToolbarProps> = ({ setLineColor, setLineWidth, setBrushType, 
     setLineColor(event.target.value);
   }
 
+  const brushChangeHandler = (brush: BrushType) => {
+    setBrushType(brush);
+    setBrush(brush);
+  }
+
   return (
     <div>
       <Button variant="default" onClick={eraserHandler}>Eraser</Button>
       <Button variant="default" onClick={widthDecreaseHandler} disabled={isMinWidth}>-</Button>
       <Button variant="default" onClick={widthIncreaseHandler} disabled={isMaxWidth}>+</Button>
       <input type="color" value={color} onChange={(e) => colorChangeHandler(e)} />
+      <Button variant="default" onClick={() => brushChangeHandler("round")}>Round</Button>
+      <Button variant="default" onClick={() => brushChangeHandler("square")}>Square</Button>
     </div>
   )
 }
