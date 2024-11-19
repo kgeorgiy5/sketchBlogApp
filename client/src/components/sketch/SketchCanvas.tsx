@@ -1,21 +1,34 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from "react";
 
 import styles from "../../styles/sketch/SketchCanvas.module.css";
+import Toolbar from "./Toolbar";
 
 // interface ISketchCanvasProps {
 //   draw: (context: CanvasRenderingContext2D) => void;
 // }
 
+export interface ILineConfig {
+  lineColor: string,
+  lineWidth: number,
+  brushType: BrushType
+}
+
 type Point = { x: number, y: number };
-type BrushType = "round" | "square";
+export type BrushType = "round" | "square";
+
+const defaultLineConfig: ILineConfig = {
+  lineColor: "black",
+  lineWidth: 5,
+  brushType: "round"
+}
 
 const SketchCanvas: FC = () => {
   const canvasResolution = { x: 2000, y: 2000 };
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [canvasSizeCoefs, setCanvasSizeCoefs] = useState({ x: 1, y: 1 });
-  const [lineColor, setLineColor] = useState<string>("black");
-  const [lineWidth, setLineWidth] = useState<number>(5);
-  const [brushType, setBrushType] = useState<BrushType>("round");
+  const [lineColor, setLineColor] = useState<string>(defaultLineConfig.lineColor);
+  const [lineWidth, setLineWidth] = useState<number>(defaultLineConfig.lineWidth);
+  const [brushType, setBrushType] = useState<BrushType>(defaultLineConfig.brushType);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -87,6 +100,11 @@ const SketchCanvas: FC = () => {
         onMouseOut={() => setIsDrawing(false)}
         onMouseDown={(e) => mouseDownHandler(e)}
         onMouseMove={(e) => mouseMoveHandler(e)} />
+      <Toolbar
+        defaultLineConfig={defaultLineConfig}
+        setBrushType={setBrushType}
+        setLineWidth={setLineWidth}
+        setLineColor={setLineColor} />
     </>
   )
 };
