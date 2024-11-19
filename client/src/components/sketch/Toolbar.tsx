@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import Button from "../Button";
 import { BrushType, ILineConfig } from "./SketchCanvas";
 
@@ -30,7 +30,7 @@ const Toolbar: FC<IToolbarProps> = ({ setLineColor, setLineWidth, setBrushType, 
     }
 
     setBrushType("square");
-    setLineColor("white");
+    setLineColor("#E2F1E7");
     setLineWidth(40);
     setIsErasing(true);
   }

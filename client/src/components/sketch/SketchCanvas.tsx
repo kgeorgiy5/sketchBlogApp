@@ -2,10 +2,11 @@ import { FC, MouseEvent, useEffect, useRef, useState } from "react";
 
 import styles from "../../styles/sketch/SketchCanvas.module.css";
 import Toolbar from "./Toolbar";
+import Button from "../Button";
 
-// interface ISketchCanvasProps {
-//   draw: (context: CanvasRenderingContext2D) => void;
-// }
+interface ISketchCanvasProps {
+  onSave: (imageUrl: string) => void;
+}
 
 export interface ILineConfig {
   lineColor: string,
@@ -22,7 +23,7 @@ const defaultLineConfig: ILineConfig = {
   brushType: "round"
 }
 
-const SketchCanvas: FC = () => {
+const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
   const canvasResolution = { x: 2000, y: 2000 };
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [canvasSizeCoefs, setCanvasSizeCoefs] = useState({ x: 1, y: 1 });
@@ -30,14 +31,27 @@ const SketchCanvas: FC = () => {
   const [lineWidth, setLineWidth] = useState<number>(defaultLineConfig.lineWidth);
   const [brushType, setBrushType] = useState<BrushType>(defaultLineConfig.brushType);
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      const widthCoef = canvasResolution.x / canvasRef.current.offsetWidth;
-      const heightCoef = canvasResolution.y / canvasRef.current.offsetHeight;
+  const [isSaved, setIsSaved] = useState(false);
 
-      setCanvasSizeCoefs({ x: widthCoef, y: heightCoef });
+  useEffect(() => {
+    if (!canvasRef.current) {
+      return;
     }
-  }, [])
+
+    const widthCoef = canvasResolution.x / canvasRef.current.offsetWidth;
+    const heightCoef = canvasResolution.y / canvasRef.current.offsetHeight;
+
+    const context = canvasRef.current.getContext("2d");
+
+    if (!context) {
+      return;
+    }
+
+    context.fillStyle = "#E2F1E7";
+    context.fillRect(0, 0, canvasResolution.x, canvasResolution.y);
+
+    setCanvasSizeCoefs({ x: widthCoef, y: heightCoef });
+  }, [canvasResolution.x, canvasResolution.y])
 
   const [isDrawing, setIsDrawing] = useState(false);
 
@@ -58,6 +72,7 @@ const SketchCanvas: FC = () => {
     const context = canvasRef.current?.getContext("2d");
 
     if (context) {
+      setIsSaved(false);
       const point = getRelativeMouseCoordinates(mouseEvent);
 
       context.beginPath();
@@ -91,15 +106,24 @@ const SketchCanvas: FC = () => {
     mouseEvent.preventDefault();
   }
 
+  const saveHandler = () => {
+    if (canvasRef.current) {
+      onSave(canvasRef.current.toDataURL());
+      setIsSaved(true);
+      return;
+    }
+  }
 
   return (
     <>
+      <p>{isSaved ? "Saved" : "Not saved"}</p>
       <canvas ref={canvasRef} className={styles["canvas"]}
         height={canvasResolution.x} width={canvasResolution.y}
         onMouseUp={() => setIsDrawing(false)}
         onMouseOut={() => setIsDrawing(false)}
         onMouseDown={(e) => mouseDownHandler(e)}
         onMouseMove={(e) => mouseMoveHandler(e)} />
+      <Button variant="default" onClick={saveHandler}>Save</Button>
       <Toolbar
         defaultLineConfig={defaultLineConfig}
         setBrushType={setBrushType}
