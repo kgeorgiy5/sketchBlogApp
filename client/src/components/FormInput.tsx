@@ -22,7 +22,7 @@ const FormInput = ({ label, onChange, isPassword, isEmail }: IFormInputProps) =>
     } else if (isEmail) {
       return "email";
     } else {
-      "text";
+      return "text";
     }
   }
 

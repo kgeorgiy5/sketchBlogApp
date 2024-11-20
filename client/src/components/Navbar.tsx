@@ -45,18 +45,18 @@ const Navbar = () => {
         </div>
         <div className={styles["navbar-buttons"]}>
           <div className={styles["redirect-buttons"]}>
-            <Button variant={`${currentPath === "/" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("")} >Feed</Button>
-            <Button variant={`${currentPath === "/my-posts" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
-            <Button variant={`${currentPath === "/sketch" ? "button-navbar--highlighted" : "button-navbar"}`} onClick={() => navigationButtonHandler("sketch")}>Sketch</Button>
+            <Button variant={`${currentPath === "/" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("")} >Feed</Button>
+            <Button variant={`${currentPath === "/my-posts" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
+            <Button variant={`${currentPath === "/sketch" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("sketch")}>Sketch</Button>
           </div>
           <div className={styles["auth-buttons"]}>
             {isLogged ? (
               <>
-                <Button variant="button-navbar" onClick={handleLogoutButton} >Logout</Button>
+                <Button variant="navbar" onClick={handleLogoutButton} >Logout</Button>
               </>) : (
               <>
-                <Button variant="button-navbar" onClick={handleSignInButton} >Sign In</Button>
-                <Button variant="button-navbar" onClick={handleSignUpButton} >Sign Up</Button>
+                <Button variant="navbar" onClick={handleSignInButton} >Sign In</Button>
+                <Button variant="navbar" onClick={handleSignUpButton} >Sign Up</Button>
               </>
             )}
           </div>
