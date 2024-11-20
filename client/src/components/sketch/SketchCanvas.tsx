@@ -1,4 +1,5 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from "react";
+import { FaRegSave } from "react-icons/fa";
 
 import styles from "../../styles/sketch/SketchCanvas.module.css";
 import Toolbar from "./Toolbar";
@@ -24,13 +25,17 @@ const defaultLineConfig: ILineConfig = {
 }
 
 const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
-  const canvasResolution = { x: 2000, y: 2000 };
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasResolution = { x: 3000, y: 3000 };
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
   const [canvasSizeCoefs, setCanvasSizeCoefs] = useState({ x: 1, y: 1 });
+
   const [lineColor, setLineColor] = useState<string>(defaultLineConfig.lineColor);
   const [lineWidth, setLineWidth] = useState<number>(defaultLineConfig.lineWidth);
   const [brushType, setBrushType] = useState<BrushType>(defaultLineConfig.brushType);
 
+  const [isDrawing, setIsDrawing] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
@@ -53,7 +58,7 @@ const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
     setCanvasSizeCoefs({ x: widthCoef, y: heightCoef });
   }, [canvasResolution.x, canvasResolution.y])
 
-  const [isDrawing, setIsDrawing] = useState(false);
+
 
   const getRelativeMouseCoordinates: (mouseEvent: MouseEvent<HTMLCanvasElement>) => Point = (mouseEvent) => {
     if (canvasRef.current) {
@@ -76,6 +81,7 @@ const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
       const point = getRelativeMouseCoordinates(mouseEvent);
 
       context.beginPath();
+      context.save();
       context.moveTo(point.x, point.y);
       context.lineTo(point.x, point.y);
       context.lineCap = brushType;
@@ -106,6 +112,17 @@ const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
     mouseEvent.preventDefault();
   }
 
+  const stopDrawingHandler = () => {
+    const context = canvasRef.current?.getContext("2d");
+
+    if (!context) {
+      return;
+    }
+
+    saveHandler();
+    setIsDrawing(false);
+  }
+
   const saveHandler = () => {
     if (canvasRef.current) {
       onSave(canvasRef.current.toDataURL());
@@ -114,22 +131,34 @@ const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
     }
   }
 
+  const clearHandler = () => {
+    const context = canvasRef.current?.getContext("2d");
+    if (!context) {
+      return;
+    }
+
+    context.fillStyle = "#E2F1E7";
+    context.fillRect(0, 0, canvasResolution.x, canvasResolution.y);
+  }
+
   return (
-    <>
-      <p>{isSaved ? "Saved" : "Not saved"}</p>
+    <div className={styles["main"]}>
       <canvas ref={canvasRef} className={styles["canvas"]}
         height={canvasResolution.x} width={canvasResolution.y}
-        onMouseUp={() => setIsDrawing(false)}
-        onMouseOut={() => setIsDrawing(false)}
+        onMouseUp={stopDrawingHandler}
+        onMouseOut={stopDrawingHandler}
         onMouseDown={(e) => mouseDownHandler(e)}
         onMouseMove={(e) => mouseMoveHandler(e)} />
-      <Button variant="default" onClick={saveHandler}>Save</Button>
-      <Toolbar
-        defaultLineConfig={defaultLineConfig}
-        setBrushType={setBrushType}
-        setLineWidth={setLineWidth}
-        setLineColor={setLineColor} />
-    </>
+      <div className={styles["tools"]}>
+        <Button variant={isSaved ? "toolbar--success" : "toolbar"} disabled={true} onClick={saveHandler}><FaRegSave size="1rem" /></Button>
+        <Toolbar
+          onClear={clearHandler}
+          defaultLineConfig={defaultLineConfig}
+          setBrushType={setBrushType}
+          setLineWidth={setLineWidth}
+          setLineColor={setLineColor} />
+      </div>
+    </div>
   )
 };
 

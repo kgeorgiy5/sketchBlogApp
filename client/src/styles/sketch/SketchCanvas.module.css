@@ -1,6 +1,28 @@
 .canvas {
-  width: 40%;
   aspect-ratio: 1;
+  width: 40rem;
   border: 1px solid black;
   cursor: crosshair;
+  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem;
+  box-sizing: border-box;
+}
+
+.tools {
+  padding: 1rem;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  background-color: var(--main1);
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.main {
+  margin: auto;
+  width: fit-content;
+  display: grid;
+  grid-template-columns: 1fr 10rem;
 }

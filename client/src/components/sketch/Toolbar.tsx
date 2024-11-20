@@ -1,18 +1,25 @@
 import { ChangeEvent, FC, useState } from "react";
+import { LuBrush, LuEraser, LuPen } from "react-icons/lu";
+import { PiNoteBlankBold } from "react-icons/pi";
+import { FaCircle } from "react-icons/fa6";
+
 import Button from "../Button";
 import { BrushType, ILineConfig } from "./SketchCanvas";
+import ColorPalette from "./ColorPalette";
+import styles from "../../styles/sketch/Toolbar.module.css";
+import { genericCallbackType } from "../../types/callbackTypes";
 
 interface IToolbarProps {
   setLineColor: (color: string) => void;
   setLineWidth: (width: number) => void;
   setBrushType: (type: BrushType) => void;
+  onClear: genericCallbackType;
   defaultLineConfig: ILineConfig;
 }
 
-const Toolbar: FC<IToolbarProps> = ({ setLineColor, setLineWidth, setBrushType, defaultLineConfig }) => {
-  const widthBoudaries = { min: 5, max: 50 };
-  const [isMinWidth, setIsMinWidth] = useState(false);
-  const [isMaxWidth, setIsMaxWidth] = useState(false);
+const Toolbar: FC<IToolbarProps> = ({ setLineColor, setLineWidth, setBrushType, defaultLineConfig, onClear }) => {
+  const widthBoundaries = { min: 5, max: 100 };
+  const ERASER_COLOR = "#E2F1E7";
 
   const [color, setColor] = useState<string>(defaultLineConfig.lineColor);
   const [brush, setBrush] = useState<BrushType>(defaultLineConfig.brushType);
@@ -23,51 +30,23 @@ const Toolbar: FC<IToolbarProps> = ({ setLineColor, setLineWidth, setBrushType, 
   const eraserHandler = () => {
     if (isErasing) {
       setLineColor(color);
-      setLineWidth(width);
-      setBrushType(brush);
       setIsErasing(false);
       return;
     }
 
     setBrushType("square");
-    setLineColor("#E2F1E7");
+    setBrush("square");
+    setLineColor(ERASER_COLOR);
     setLineWidth(40);
+    setWidth(40);
     setIsErasing(true);
   }
 
-  const widthDecreaseHandler = () => {
-    if (width <= widthBoudaries.min) {
-      setIsMinWidth(true);
-      return;
-    }
-
-    setIsMinWidth(false);
-    setIsMaxWidth(false);
-    setWidth(prevState => {
-      setLineWidth(prevState - 5);
-      return prevState - 5;
-    });
-  }
-
-  const widthIncreaseHandler = () => {
-    if (width >= widthBoudaries.max) {
-      setIsMaxWidth(true);
-      return;
-    }
-
-    setIsMaxWidth(false);
-    setIsMinWidth(false);
-    setWidth(prevState => {
-      setLineWidth(prevState + 5);
-      return prevState + 5;
-    });
-  }
-
-  const colorChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const colorChangeHandler = (color: string) => {
     setIsErasing(false);
     setLineWidth(width);
-    setColor(event.target.value);
-    setLineColor(event.target.value);
+    setColor(color);
+    setLineColor(color);
   }
 
   const brushChangeHandler = (brush: BrushType) => {
@@ -75,17 +54,53 @@ const Toolbar: FC<IToolbarProps> = ({ setLineColor, setLineWidth, setBrushType, 
     setBrush(brush);
   }
 
+  const widthChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setWidth(+event.target.value);
+    setLineWidth(+event.target.value);
+  }
+
   return (
-    <div>
-      <Button variant="default" onClick={eraserHandler}>Eraser</Button>
-      <Button variant="default" onClick={widthDecreaseHandler} disabled={isMinWidth}>-</Button>
-      <Button variant="default" onClick={widthIncreaseHandler} disabled={isMaxWidth}>+</Button>
-      <input type="color" value={color} onChange={(e) => colorChangeHandler(e)} />
-      <Button variant="default" onClick={() => brushChangeHandler("round")}>Round</Button>
-      <Button variant="default" onClick={() => brushChangeHandler("square")}>Square</Button>
+    <div className={styles["toolbar"]}>
+
+      <div className={styles['brush-type-buttons']}>
+        <Button onClick={onClear} variant="toolbar"><PiNoteBlankBold size="1rem" /></Button>
+
+        <Button
+          variant={isErasing ? "toolbar--highlighted" : "toolbar"}
+          onClick={eraserHandler}>
+          <LuEraser size="1rem" />
+        </Button>
+
+        <Button
+          variant={brush === "round" ? "toolbar--highlighted" : "toolbar"}
+          onClick={() => brushChangeHandler("round")}>
+          <LuPen size="1rem" />
+        </Button>
+
+        <Button
+          variant={brush === "square" ? "toolbar--highlighted" : "toolbar"}
+          onClick={() => brushChangeHandler("square")}>
+          <LuBrush size="1rem" />
+        </Button>
+
+      </div>
+
+      <div className={styles["width-selector"]}>
+        <FaCircle size="1.2rem" />
+        <input
+          type="range" min={widthBoundaries.min}
+          max={widthBoundaries.max} value={width}
+          onChange={(e) => widthChangeHandler(e)}
+          className={styles["slider"]} />
+        <FaCircle size="0.6rem" />
+      </div>
+
+      <ColorPalette
+        onChange={(color) => colorChangeHandler(color)}
+        currentColor={color} />
+
     </div>
   )
 }
 
 export default Toolbar;
-

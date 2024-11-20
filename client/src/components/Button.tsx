@@ -1,7 +1,15 @@
-import IButtonProps from "../types/IButtonProps";
 import styles from "../styles/Button.module.css";
+import { FC, ReactNode } from "react";
+import { genericCallbackType } from "../types/callbackTypes";
 
-const Button = ({ children, onClick, variant, disabled = false }: IButtonProps) => {
+interface IButton {
+  children: ReactNode;
+  onClick: genericCallbackType;
+  variant: "default" | "navbar" | "navbar--highlighted" | "toolbar" | "toolbar--highlighted" | "toolbar--success";
+  disabled?: boolean;
+}
+
+const Button: FC<IButton> = ({ children, onClick, variant, disabled = false }) => {
 
 
   const buttonClickHandler = () => {

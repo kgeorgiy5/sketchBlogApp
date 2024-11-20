@@ -1,0 +1,47 @@
+.color-button {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border-radius: 100%;
+  border: 2px var(--main1) solid;
+  width: fit-content;
+}
+
+.color-button--selected {
+  composes: color-button;
+  border: 2px var(--accent2) solid;
+  box-shadow: inset 0px 0px 4px var(--main2);
+  transition: all 150ms ease-in-out;
+  scale: 1.5;
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
+}
+
+.black {
+  background-color: black;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.purple {
+  background-color: purple;
+}
+
+.pink {
+  background-color: pink;
+}

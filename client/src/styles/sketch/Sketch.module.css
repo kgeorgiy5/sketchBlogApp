@@ -1,0 +1,19 @@
+.sketch {
+  width: 70%;
+  margin: auto;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.title-form {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--main1);
+}

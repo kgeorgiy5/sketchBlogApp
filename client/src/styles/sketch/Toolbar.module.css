@@ -1,0 +1,53 @@
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.slider {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  margin: 0;
+  border: none;
+  vertical-align: bottom;
+  height: 5rem;
+  -webkit-appearance: none;
+  background-color: transparent;
+}
+
+.slider:focus {
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: var(--accent2);
+  width: 1rem;
+  height: 2rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+
+.brush-type-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-items: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.width-selector {
+  gap: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  color: var(--accent2);
+  font-weight: bolder;
+  font-size: 1.2rem;
+  background-color: var(--main2);
+  padding: 1rem;
+  border-radius: 1rem;
+}
