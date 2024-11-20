@@ -52,8 +52,8 @@ const SignUpForm = ({ toggleAuth, onClose, setErrorMessage }: IAuthFormProps) =>
       <FormInput isPassword={true} label="Password" onChange={(e) => passwordInputHandler(e)} />
       <FormInput isPassword={true} label="Confirm password" onChange={(e) => confirmPasswordInputHandler(e)} />
       <div className={styles["toggle-block"]}>
-        <Button onClick={handleSignUp} variant="button-default">Submit</Button>
-        <Button onClick={toggleAuth} variant="button-default">Already have an account? Sign in!</Button>
+        <Button onClick={handleSignUp} variant="default">Submit</Button>
+        <Button onClick={toggleAuth} variant="default">Already have an account? Sign in!</Button>
       </div>
     </form>
   )
