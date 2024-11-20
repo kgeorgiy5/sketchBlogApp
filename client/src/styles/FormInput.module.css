@@ -9,13 +9,14 @@
 
 .label {
   font-weight: 500;
+  font-size: 1.5rem;
 }
 
 .input-block {
   align-items: center;
   display: flex;
   flex-direction: row;
-  width: 80%;
+  width: 100%;
   gap: 0.5rem;
   background-color: var(--accent1);
   border-radius: 0.2rem;
@@ -27,8 +28,10 @@
   color: var(--main1);
   background-color: inherit;
   border: none;
-  height: 1.5rem;
+  font-size: 2rem;
+  height: 2rem;
   width: 100%;
+  padding: 0.5rem;
 }
 
 .input-field:focus {
@@ -37,6 +40,6 @@
 
 .show-password-button {
   color: var(--main1);
-  padding: 0 0.3rem 0rem 0rem;
+  padding: 0 1rem 0rem 0rem;
   cursor: pointer;
 }

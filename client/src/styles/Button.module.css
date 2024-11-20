@@ -1,21 +1,15 @@
-.button-default {
+.default {
   cursor: pointer;
-
   width: 100%;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-
   transition: ease-in-out;
   transition-delay: 75ms;
   transition-duration: 150ms;
-
-  border: none;
   border: solid 2px var(--main1);
   border-radius: 0.3rem;
-
   color: var(--main1);
   background-color: var(--accent2);
-
   clear: both;
   display: inline-block;
   overflow: hidden;
@@ -23,33 +17,69 @@
   box-sizing: border-box;
 }
 
-.button-default:active,
-.button-default:hover {
+.default:active,
+.default:hover {
   color: var(--accent2);
   background-color: var(--main1);
 }
 
-.button-navbar {
-  composes: button-default;
+.navbar {
+  composes: default;
 }
 
-.button-navbar:active,
-.button-navbar:hover {
+.navbar:active,
+.navbar:hover {
   color: var(--main1);
   background-color: var(--accent1);
 }
 
-.button-navbar--highlighted {
-  composes: button-navbar;
-
+.navbar--highlighted {
+  composes: navbar;
   cursor: default;
-
   background-color: var(--main1);
   color: var(--accent1);
 }
 
-.button-navbar--highlighted:active,
-.button-navbar--highlighted:hover {
+.navbar--highlighted:active,
+.navbar--highlighted:hover {
   background-color: var(--main1);
   color: var(--accent1);
+}
+
+.toolbar {
+  border-radius: 100%;
+  text-align: center;
+  vertical-align: middle;
+  aspect-ratio: 1;
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+  border: none;
+  background-color: var(--main1);
+  color: var(--accent2);
+  transition: all 150ms ease-in-out;
+}
+
+.toolbar:hover,
+.toolbar:active {
+  background-color: var(--accent2);
+  color: var(--main1);
+}
+
+
+.toolbar--highlighted {
+  composes: toolbar;
+  background-color: var(--main2);
+  color: var(--accent2);
+}
+
+.toolbar--success {
+  composes: toolbar;
+  background-color: #4dba41;
+}
+
+.toolbar--success:disabled {
+  cursor: default;
+  background-color: #4dba41;
+  color: var(--accent2);
 }

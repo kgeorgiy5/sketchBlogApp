@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import ErrorPopUp from "./ErrorPopUp";
 import styles from "../styles/ErrorStack.module.css";
 import { complexCallbackType } from "../types/callbackTypes";
 
-const ErrorStack = ({ message, setMessage }: { message: string | undefined, setMessage: complexCallbackType<string> }) => {
+//FIXME: set error may be a bad practice
+
+interface IErrorStackProps {
+  message: string | undefined | null;
+  setMessage: complexCallbackType<string>;
+}
+
+const ErrorStack: FC<IErrorStackProps> = ({ message, setMessage }) => {
 
   const [errors, setErrors] = useState<string[]>([]);
 

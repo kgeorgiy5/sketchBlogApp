@@ -1,9 +1,42 @@
+import { useEffect, useState } from "react";
+
+import styles from "../../styles/sketch/Sketch.module.css";
 import SketchCanvas from "./SketchCanvas";
+import FormInput from "../FormInput";
+import Button from "../Button";
+import usePost from "../../hooks/usePost";
+import ErrorStack from "../ErrorStack";
+import { useNavigate } from "react-router-dom";
 
 const Sketch = () => {
+  const [imageUrl, setImageUrl] = useState<string>();
+  const [title, setTitle] = useState<string>();
+
+  const navigate = useNavigate();
+
+  const [response, error, setError, sendRequest] = usePost(imageUrl, title);
+
+  useEffect(() => {
+    if (response) {
+      navigate("/");
+    }
+
+  }, [response, navigate])
+
+  const handleSubmit = () => {
+    sendRequest();
+  }
+
   return (
     <>
-      <SketchCanvas />
+      <div className={styles['sketch']}>
+        <form className={styles["title-form"]} onSubmit={(e) => e.preventDefault()}>
+          <FormInput label="Sketch" onChange={(e) => setTitle(e)} />
+          <Button onClick={handleSubmit} variant="default">Submit</Button>
+        </form>
+        <SketchCanvas onSave={(e) => setImageUrl(e)} />
+      </div>
+      <ErrorStack message={error} setMessage={setError} />
     </>
   )
 };

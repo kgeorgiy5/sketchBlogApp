@@ -1,0 +1,44 @@
+.color-palette {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  gap: 0.5rem;
+  background-color: var(--main2);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.color-input {
+  grid-column: span 2;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  overflow: none;
+  border: 2px solid var(--main1);
+  border-radius: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: all 150ms ease-in-out;
+}
+
+.color-input:focus-within {
+  outline: none;
+  box-shadow: inset 0px 0px 4px var(--main2);
+  scale: 1.2;
+  border: 2px solid var(--accent2);
+}
+
+.hidden {
+  cursor: pointer;
+  -webkit-appearance: none;
+  color: transparent;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  top: -50%;
+  left: -50%;
+}
