@@ -4,7 +4,7 @@ import { useState } from "react";
 import { complexCallbackType } from "../types/callbackTypes";
 
 type State<T> = T | undefined;
-type PostHook = (title: State<string>, content: State<string>) => [response: AxiosResponse | null, errorMessage: string | null, setErrorMessage: complexCallbackType<string>, sendRequest: () => void];
+type PostHook = (title: State<string>, content: State<Blob>) => [response: AxiosResponse | null, errorMessage: string | null, setErrorMessage: complexCallbackType<string>, sendRequest: () => void];
 
 const usePost: PostHook = (title, content) => {
   const endpoint = getApiRoute("create-post")
@@ -13,17 +13,29 @@ const usePost: PostHook = (title, content) => {
 
   const sendRequest = () => {
     if (!title || !content) {
-      setErrorMessage("Wrong title/description/image");
+      setErrorMessage("Wrong title/image");
       setResponse(null);
+      return;
     }
 
-    axios.post(endpoint, { title: title, content: content }).then(res => {
-      setResponse(res);
-      setErrorMessage(null);
-    }).catch(err => {
-      setErrorMessage(err.message);
-      setResponse(null);
-    })
+    const file = new File([content], "sketch.jpeg");
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("sketch", file);
+
+    axios.post(endpoint, formData,
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" }
+      }).then(res => {
+        setResponse(res);
+        setErrorMessage(null);
+      }).catch(err => {
+        setErrorMessage(err.message);
+        setResponse(null);
+      })
+
+
   }
 
   return [response, errorMessage, setErrorMessage, sendRequest];
