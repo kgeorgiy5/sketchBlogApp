@@ -9,12 +9,12 @@ import ErrorStack from "../ErrorStack";
 import { useNavigate } from "react-router-dom";
 
 const Sketch = () => {
-  const [imageUrl, setImageUrl] = useState<string>();
+  const [image, setImage] = useState<Blob>();
   const [title, setTitle] = useState<string>();
 
   const navigate = useNavigate();
 
-  const [response, error, setError, sendRequest] = usePost(imageUrl, title);
+  const [response, error, setError, sendRequest] = usePost(title, image);
 
   useEffect(() => {
     if (response) {
@@ -34,7 +34,7 @@ const Sketch = () => {
           <FormInput label="Sketch" onChange={(e) => setTitle(e)} />
           <Button onClick={handleSubmit} variant="default">Submit</Button>
         </form>
-        <SketchCanvas onSave={(e) => setImageUrl(e)} />
+        <SketchCanvas onSave={(e) => setImage(e)} />
       </div>
       <ErrorStack message={error} setMessage={setError} />
     </>

@@ -11,13 +11,17 @@ const PostSchema = new Schema({
   },
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    required: true
   },
   updateDate: {
     type: Date,
     required: true
   },
-  numberOfLikes: Number,
+  numberOfLikes: {
+    type: Number,
+    required: true
+  },
 })
 
 export default model("Post", PostSchema);

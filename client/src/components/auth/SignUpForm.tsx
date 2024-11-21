@@ -23,6 +23,7 @@ const SignUpForm = ({ toggleAuth, onClose, setErrorMessage }: IAuthFormProps) =>
   }
 
   const signUpSuccessHandler = (res: AxiosResponse) => {
+    console.log("sign up success");
     onClose();
   }
 
@@ -33,16 +34,18 @@ const SignUpForm = ({ toggleAuth, onClose, setErrorMessage }: IAuthFormProps) =>
   const sendSignUpRequest = useSignUp(signUpSuccessHandler, signUpErrorHandler);
 
   const handleSignUp = () => {
+    if (!email || !password) {
+      setErrorMessage("Email or password fields are empty");
+      return;
+    }
+
     if (password !== confirmPassword) {
       setErrorMessage("Password and confirm password do not match");
       return;
     }
 
-    if (email && password) {
-      sendSignUpRequest(email, password);
-    }
-
-    setErrorMessage("Email or password fields are empty");
+    sendSignUpRequest(email, password);
+    return;
   }
 
   return (

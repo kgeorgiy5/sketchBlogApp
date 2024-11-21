@@ -6,7 +6,7 @@ import Toolbar from "./Toolbar";
 import Button from "../Button";
 
 interface ISketchCanvasProps {
-  onSave: (imageUrl: string) => void;
+  onSave: (image: Blob) => void;
 }
 
 export interface ILineConfig {
@@ -125,9 +125,14 @@ const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
 
   const saveHandler = () => {
     if (canvasRef.current) {
-      onSave(canvasRef.current.toDataURL());
+      canvasRef.current.toBlob((blob) => {
+        if (!blob) {
+          console.log("blob err");
+          return;
+        }
+        onSave(blob);
+      }, "image/jpeg", 1);
       setIsSaved(true);
-      return;
     }
   }
 
