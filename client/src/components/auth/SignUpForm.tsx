@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useSignUp from "../../hooks/useSignUp";
-import { AxiosError, AxiosResponse } from "axios";
+import useSignUp from "../../hooks/auth/useSignUp.ts";
+import { AxiosError } from "axios";
 import FormInput from "../FormInput";
 import Button from "../Button";
 import styles from "../../styles/AuthForm.module.css";
@@ -22,8 +22,7 @@ const SignUpForm = ({ toggleAuth, onClose, setErrorMessage }: IAuthFormProps) =>
     setConfirmPassword(e);
   }
 
-  const signUpSuccessHandler = (res: AxiosResponse) => {
-    console.log("sign up success");
+  const signUpSuccessHandler = () => {
     onClose();
   }
 

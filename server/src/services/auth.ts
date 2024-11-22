@@ -17,7 +17,7 @@ export const createUser = async (email: string, password: string) => {
   const savedUser = await newUser.save();
 
   if (!savedUser) {
-    const err: AppError = new Error("error occuered during save operation");
+    const err: AppError = new Error("An error occurred during save operation");
     err.statusCode = 500;
     throw err;
   }

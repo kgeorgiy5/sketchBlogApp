@@ -3,7 +3,7 @@ import { useState } from "react";
 import FormInput from "../FormInput";
 import Button from "../Button";
 import styles from "../../styles/AuthForm.module.css";
-import useSignIn from "../../hooks/useSignIn";
+import useSignIn from "../../hooks/auth/useSignIn.ts";
 import { AxiosResponse, AxiosError } from "axios";
 
 const SignInForm = ({ onClose, toggleAuth, setErrorMessage }: IAuthFormProps) => {
