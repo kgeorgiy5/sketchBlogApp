@@ -150,6 +150,9 @@ const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
     <div className={styles["main"]}>
       <canvas ref={canvasRef} className={styles["canvas"]}
         height={canvasResolution.x} width={canvasResolution.y}
+              onPointerDown={(e) => mouseDownHandler(e)}
+              onPointerMove={(e) => mouseMoveHandler(e)}
+              onPointerUp={stopDrawingHandler}
         onMouseUp={stopDrawingHandler}
         onMouseOut={stopDrawingHandler}
         onMouseDown={(e) => mouseDownHandler(e)}

@@ -3,13 +3,19 @@
   --main1: #243642;
   --main2: #387478;
   --accent1: #629584;
-  --accent2: #E2F1E7;
+  --accent2: #dcecce;
   --error: #e3546c;
 }
 
+html {
+  height: 100%;
+}
 
 body {
+  background-color: #b2dabf;
   margin: 0;
+  height: 100%;
+  width: 100%;
 }
 
 @keyframes rollout {

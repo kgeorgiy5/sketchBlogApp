@@ -6,13 +6,12 @@ const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   const userId = req.session.userId;
 
   if (!isAuthenticated || !userId) {
-    const err: AppError = new Error("unauthorized");
+    const err: AppError = new Error("Unauthorized");
     err.statusCode = 401;
     return next(err);
   }
 
   next();
-
 };
 
 export default requireAuth;
