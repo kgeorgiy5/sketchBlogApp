@@ -3,13 +3,20 @@ import styles from "../styles/Navbar.module.css";
 import Button from "./Button";
 import AuthForm from "./auth/AuthForm.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../store/store.ts";
+import {setIsAuthenticated} from "../reducers/authReducer.ts";
+import useLogout from "../hooks/auth/useLogout.ts";
 
 const Navbar = () => {
   const currentPath = useLocation().pathname;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const sendLogoutRequest = useLogout();
+
+  const isAuth = useSelector((state:RootState) => state.isAuthenticated.isAuthenticated);
 
   const [isAuthShown, setIsAuthShown] = useState<boolean>(false);
-  const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isRegistration, setIsRegistration] = useState<boolean>(false);
 
   const navigationButtonHandler = (path: string) => {
@@ -29,7 +36,10 @@ const Navbar = () => {
   }
 
   const handleLogoutButton = () => {
-    setIsAuthShown(false);
+    sendLogoutRequest().then((res) => {
+      console.log(res)
+      dispatch(setIsAuthenticated({isAuthenticated: false}));
+    });
   }
 
   const handleAuthModelClose = () => {
@@ -46,11 +56,15 @@ const Navbar = () => {
         <div className={styles["navbar-buttons"]}>
           <div className={styles["redirect-buttons"]}>
             <Button variant={`${currentPath === "/" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("")} >Feed</Button>
-            <Button variant={`${currentPath === "/my-posts" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
-            <Button variant={`${currentPath === "/sketch" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("sketch")}>Sketch</Button>
+            {isAuth ? (
+                <>
+                  <Button variant={`${currentPath === "/my-posts" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
+                  <Button variant={`${currentPath === "/sketch" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("sketch")}>Sketch</Button>
+                </>
+            ): null}
           </div>
           <div className={styles["auth-buttons"]}>
-            {isLogged ? (
+            {isAuth ? (
               <>
                 <Button variant="navbar" onClick={handleLogoutButton} >Logout</Button>
               </>) : (
