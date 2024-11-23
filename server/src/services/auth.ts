@@ -1,17 +1,24 @@
-import { genSalt, hash, compare } from "bcryptjs"
+import { genSalt, hash, compare } from "bcryptjs";
 
 import User from "../models/user";
 import { AppError } from "../types/error";
 
 export const createUser = async (email: string, password: string) => {
+  const existingEmail = await User.find({ email: email });
+
+  if (existingEmail[0]) {
+    const err: AppError = new Error("User already exists");
+    err.statusCode = 400;
+    throw err;
+  }
+
   const salt = await genSalt(12);
   const hashedPassword = await hash(password, salt);
-
 
   const newUser = new User({
     email: email,
     password: hashedPassword,
-    likedPosts: []
+    likedPosts: [],
   });
 
   const savedUser = await newUser.save();
@@ -23,10 +30,9 @@ export const createUser = async (email: string, password: string) => {
   }
 
   return savedUser;
-}
+};
 
 export const loginUser = async (email: string, password: string) => {
-
   const user = await User.findOne({ email: email });
 
   if (!user) {
@@ -45,4 +51,4 @@ export const loginUser = async (email: string, password: string) => {
   }
 
   return user;
-}
+};
