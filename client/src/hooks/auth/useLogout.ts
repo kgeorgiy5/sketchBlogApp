@@ -1,18 +1,22 @@
 import getApiRoute from "../../utils/getApiRoute.ts";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
+import useError from "../useError.ts";
+import {useDispatch} from "react-redux";
+import {setIsAuthenticated} from "../../reducers/authReducer.ts";
 
 const useLogout = () => {
     const endpoint = getApiRoute("logout");
-    //TODO: Add error handling
+    const errorHandler = useError();
+    const dispatch = useDispatch();
 
-    function sendRequest() {
-        return axios.post(endpoint, {withCredentials: true})
-            .catch(() => {
-
+    return () => {
+        axios.post(endpoint, {withCredentials: true}).then(() => {
+            dispatch(setIsAuthenticated({isAuthenticated:false}));
+        })
+            .catch((err:AxiosError) => {
+                errorHandler(err);
             });
     }
-
-    return sendRequest;
 };
 
 export default useLogout;

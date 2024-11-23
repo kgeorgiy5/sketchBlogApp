@@ -1,19 +1,22 @@
-import axios, { AxiosResponse } from "axios";
-import getApiRoute from "../utils/getApiRoute";
+import axios, {AxiosError, AxiosResponse} from "axios";
 import { useState } from "react";
-import { complexCallbackType } from "../types/callbackTypes";
+
+import getApiRoute from "../utils/getApiRoute";
+import useError from "./useError.ts";
 
 type State<T> = T | undefined;
-type PostHook = (title: State<string>, content: State<Blob>) => [response: AxiosResponse | null, errorMessage: string | null, setErrorMessage: complexCallbackType<string>, sendRequest: () => void];
+type PostHook = (title: State<string>, content: State<Blob>) => [response: AxiosResponse | null, sendRequest: () => void];
 
 const usePost: PostHook = (title, content) => {
+  const errorHandler = useError();
+
   const endpoint = getApiRoute("create-post")
   const [response, setResponse] = useState<AxiosResponse | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const sendRequest = () => {
     if (!title || !content) {
-      setErrorMessage("Wrong title/image");
+      const err = new Error("Title or image is missing")
+      errorHandler(err);
       setResponse(null);
       return;
     }
@@ -29,16 +32,13 @@ const usePost: PostHook = (title, content) => {
         headers: { "Content-Type": "multipart/form-data" }
       }).then(res => {
         setResponse(res);
-        setErrorMessage(null);
-      }).catch(err => {
-        setErrorMessage(err.message);
+      }).catch((err:AxiosError) => {
+        errorHandler(err);
         setResponse(null);
       })
-
-
   }
 
-  return [response, errorMessage, setErrorMessage, sendRequest];
+  return [response, sendRequest];
 };
 
 export default usePost;

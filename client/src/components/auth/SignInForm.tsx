@@ -1,12 +1,16 @@
-import { IAuthFormProps } from "../../types/auth";
 import { useState } from "react";
+
+import { IAuthFormProps } from "../../types/auth";
 import FormInput from "../FormInput";
 import Button from "../Button";
 import styles from "../../styles/AuthForm.module.css";
 import useSignIn from "../../hooks/auth/useSignIn.ts";
-import { AxiosResponse, AxiosError } from "axios";
 
-const SignInForm = ({ onClose, toggleAuth, setErrorMessage }: IAuthFormProps) => {
+const SignInForm = ({ onClose, toggleAuth}: IAuthFormProps) => {
+  const sendSignIn = useSignIn(() => {
+    onClose();
+  });
+
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -17,23 +21,9 @@ const SignInForm = ({ onClose, toggleAuth, setErrorMessage }: IAuthFormProps) =>
     setPassword(e);
   }
 
-  const signIpSuccessHandler = (res: AxiosResponse) => {
-    onClose();
-  }
-
-  const signIpErrorHandler = (err: AxiosError) => {
-    setErrorMessage(err.message);
-  }
-
-  const sendSignIn = useSignIn(signIpSuccessHandler, signIpErrorHandler);
-
   const handleSignIn = () => {
-    if (email && password) {
-      sendSignIn(email, password);
-      return;
-    }
-
-    setErrorMessage("Error or password fields are empty")
+    sendSignIn(email, password);
+    return;
   }
 
   return (

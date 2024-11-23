@@ -1,25 +1,38 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 
 import getApiRoute from "../../utils/getApiRoute.ts";
-import { complexCallbackType } from "../../types/callbackTypes.ts";
+import {complexCallbackType} from "../../types/callbackTypes.ts";
 import {useDispatch} from "react-redux";
 import {setIsAuthenticated} from "../../reducers/authReducer.ts";
+import useError from "../useError.ts";
 
-const useSignUp = (onSuccess: complexCallbackType<AxiosResponse>, onError: complexCallbackType<AxiosError>) => {
-  const apiRoute = getApiRoute("sign-up")
+const useSignUp = (onSuccess: complexCallbackType<AxiosResponse>) => {
   const dispatch = useDispatch();
+  const errorHandler = useError();
 
-  const sendRequest = (email: string, password: string) => {
-    axios.post(apiRoute, { email: email, password: password }, {withCredentials:true}).then(res => {
+  const apiRoute = getApiRoute("sign-up")
+
+  return (email: string | undefined, password: string | undefined, confirmPassword: string | undefined) => {
+    if (!email || !password) {
+      const err = new Error("Email or password fields are empty");
+      errorHandler(err);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      const err = new Error("Password and confirm password do not match")
+      errorHandler(err);
+      return;
+    }
+
+    axios.post(apiRoute, {email: email, password: password}, {withCredentials: true}).then(res => {
+      dispatch(setIsAuthenticated({isAuthenticated: true}));
       onSuccess(res);
-      dispatch(setIsAuthenticated({isAuthenticated:true}));
-    }).catch(err => {
+    }).catch((err: AxiosError) => {
       console.log(err);
-      onError(err);
+      errorHandler(err);
     });
-  }
-
-  return sendRequest;
+  };
 };
 
 export default useSignUp;

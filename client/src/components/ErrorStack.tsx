@@ -2,16 +2,13 @@ import { FC, useEffect, useState } from "react";
 
 import ErrorPopUp from "./ErrorPopUp";
 import styles from "../styles/ErrorStack.module.css";
-import { complexCallbackType } from "../types/callbackTypes";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../store/store.ts";
+import {setErrorMessage} from "../reducers/errorReducer.ts";
 
-//FIXME: set error may be a bad practice
-
-interface IErrorStackProps {
-  message: string | undefined | null;
-  setMessage: complexCallbackType<string>;
-}
-
-const ErrorStack: FC<IErrorStackProps> = ({ message, setMessage }) => {
+const ErrorStack: FC = () => {
+  const dispatch = useDispatch();
+  const message = useSelector((state:RootState) => state.error.errorMessage);
 
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -26,11 +23,11 @@ const ErrorStack: FC<IErrorStackProps> = ({ message, setMessage }) => {
       prevState.shift();
       return prevState;
     })
-    setMessage("");
+    dispatch(setErrorMessage({errorMessage:null}));
   }
 
   return (
-    <div className={styles["error-stack"]}>
+    <div className={`${styles["error-stack"]} ${errors[0] ? "" : "hidden"}`}>
       {errors[0] ? (
         <>
           {errors.map(errorMsg => (

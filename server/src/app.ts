@@ -48,7 +48,7 @@ app.use("/api", routes);
 app.use(errorMiddleware);
 
 app.use("/", (req: express.Request, res: express.Response) => {
-  res.status(404).send("Not Found");
+  res.status(404).send("API Route Not Found");
 });
 
 mongoose
