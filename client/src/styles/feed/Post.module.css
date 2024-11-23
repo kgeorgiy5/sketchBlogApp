@@ -24,3 +24,10 @@
     gap: 1rem;
     width: fit-content;
 }
+
+.post-likes{
+    color: var(--main1);
+    margin: 0;
+    text-align: center;
+    padding: 0.5rem;
+}
