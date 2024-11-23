@@ -7,6 +7,7 @@ import MyPosts from './components/myPosts/MyPosts';
 import Sketch from './components/sketch/Sketch';
 import useCheckAuth from "./hooks/auth/useCheckAuth.ts";
 import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
+import ErrorStack from "./components/ErrorStack.tsx";
 
 function App() {
     useCheckAuth();
@@ -21,6 +22,7 @@ function App() {
               <Route path="/sketch" element=<Sketch/> />
           </Route>
       </Routes>
+        <ErrorStack/>
     </BrowserRouter>
   )
 }

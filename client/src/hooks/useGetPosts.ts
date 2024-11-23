@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import getApiRoute from "../utils/getApiRoute.ts";
 import {useEffect, useState} from "react";
+import useError from "./useError.ts";
 
 export interface IPost{
     _id: string;
@@ -12,14 +13,18 @@ export interface IPost{
 }
 
 const useGetPosts = () => {
-    const [posts, setPosts] = useState<IPost[]>([]);
+    const errorHandler = useError();
+
+    const [posts, setPosts] = useState<Array<IPost>>([]);
 
     const endpoint = getApiRoute("posts");
 
     const sendRequest = () => {
         axios.get(endpoint).then((res) => {
-            const data:IPost[] = res.data;
+            const data:Array<IPost> = res.data;
             setPosts(data);
+        }).catch((err:AxiosError) => {
+            errorHandler(err);
         })
     }
 

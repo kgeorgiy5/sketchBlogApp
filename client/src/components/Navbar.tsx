@@ -1,17 +1,16 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import styles from "../styles/Navbar.module.css";
 import Button from "./Button";
 import AuthForm from "./auth/AuthForm.tsx";
-import { useLocation, useNavigate } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store.ts";
-import {setIsAuthenticated} from "../reducers/authReducer.ts";
 import useLogout from "../hooks/auth/useLogout.ts";
 
 const Navbar = () => {
   const currentPath = useLocation().pathname;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const sendLogoutRequest = useLogout();
 
   const isAuth = useSelector((state:RootState) => state.isAuthenticated.isAuthenticated);
@@ -36,10 +35,7 @@ const Navbar = () => {
   }
 
   const handleLogoutButton = () => {
-    sendLogoutRequest().then((res) => {
-      console.log(res)
-      dispatch(setIsAuthenticated({isAuthenticated: false}));
-    });
+    sendLogoutRequest();
   }
 
   const handleAuthModelClose = () => {

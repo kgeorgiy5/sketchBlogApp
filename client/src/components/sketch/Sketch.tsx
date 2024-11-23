@@ -5,7 +5,6 @@ import SketchCanvas from "./SketchCanvas";
 import FormInput from "../FormInput";
 import Button from "../Button";
 import usePost from "../../hooks/usePost";
-import ErrorStack from "../ErrorStack";
 import { useNavigate } from "react-router-dom";
 
 const Sketch = () => {
@@ -14,7 +13,7 @@ const Sketch = () => {
 
   const navigate = useNavigate();
 
-  const [response, error, setError, sendRequest] = usePost(title, image);
+  const [response, sendRequest] = usePost(title, image);
 
   useEffect(() => {
     if (response) {
@@ -36,7 +35,6 @@ const Sketch = () => {
         </form>
         <SketchCanvas onSave={(e) => setImage(e)} />
       </div>
-      <ErrorStack message={error} setMessage={setError} />
     </>
   )
 };

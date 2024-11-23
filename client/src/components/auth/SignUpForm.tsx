@@ -1,12 +1,15 @@
 import { useState } from "react";
+
 import useSignUp from "../../hooks/auth/useSignUp.ts";
-import { AxiosError } from "axios";
 import FormInput from "../FormInput";
 import Button from "../Button";
 import styles from "../../styles/AuthForm.module.css";
 import { IAuthFormProps } from "../../types/auth";
 
-const SignUpForm = ({ toggleAuth, onClose, setErrorMessage }: IAuthFormProps) => {
+const SignUpForm = ({ toggleAuth, onClose}: IAuthFormProps) => {
+    const sendSignUpRequest = useSignUp(() => {
+        onClose();
+    });
 
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
@@ -22,28 +25,8 @@ const SignUpForm = ({ toggleAuth, onClose, setErrorMessage }: IAuthFormProps) =>
     setConfirmPassword(e);
   }
 
-  const signUpSuccessHandler = () => {
-    onClose();
-  }
-
-  const signUpErrorHandler = (err: AxiosError) => {
-    setErrorMessage(err.message);
-  }
-
-  const sendSignUpRequest = useSignUp(signUpSuccessHandler, signUpErrorHandler);
-
   const handleSignUp = () => {
-    if (!email || !password) {
-      setErrorMessage("Email or password fields are empty");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setErrorMessage("Password and confirm password do not match");
-      return;
-    }
-
-    sendSignUpRequest(email, password);
+    sendSignUpRequest(email, password, confirmPassword);
     return;
   }
 
