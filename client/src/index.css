@@ -18,6 +18,10 @@ body {
   width: 100%;
 }
 
+.hidden{
+  display: none !important;
+}
+
 @keyframes rollout {
   0% {
     transform: translateY(-100px);
