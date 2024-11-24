@@ -1,0 +1,55 @@
+.post-main{
+    width: min(70%, 2000px);
+    margin: auto;
+    padding:2rem;
+    background-color: var(--accent1);
+    display:flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    height: calc(100vh - 5rem);
+    overflow:auto;
+    gap: 0.5rem;
+    box-sizing: border-box;
+}
+
+.sketch{
+    width: 50%;
+    border-radius: 1rem;
+}
+
+.post-details{
+    display: flex;
+    flex-direction: row;
+    color: var(--main1);
+    align-items: baseline;
+    justify-items: center;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+    box-sizing: border-box;
+    gap: 1rem;
+}
+
+.post-title{
+    padding: 0;
+    margin: 0;
+    color: var(--main1);
+}
+
+.post-likes{
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.post-author{
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.post-buttons{
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    flex-direction: row;
+    width: 100%;
+}
