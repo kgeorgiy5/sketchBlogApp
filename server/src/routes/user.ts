@@ -9,6 +9,7 @@ const router = Router();
 
 router.get("/my-posts", userController.getUserPosts);
 router.get("/user-data", userController.getUserData);
+router.get("/my-likes", userController.getMyLikes);
 
 router.post(
   "/create-post",

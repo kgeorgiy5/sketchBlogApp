@@ -9,6 +9,7 @@ import useCheckAuth from "./hooks/auth/useCheckAuth.ts";
 import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
 import ErrorStack from "./components/ErrorStack.tsx";
 import PostDetails from "./components/postDetails/PostDetails.tsx";
+import LikedPosts from "./components/LikedPosts.tsx";
 
 function App() {
     useCheckAuth();
@@ -22,6 +23,7 @@ function App() {
           <Route element={<ProtectedRoute/>}>
               <Route path="/my-posts" element=<MyPosts/> />
               <Route path="/sketch" element=<Sketch/> />
+              <Route path="/liked" element=<LikedPosts/> />
           </Route>
       </Routes>
         <ErrorStack/>

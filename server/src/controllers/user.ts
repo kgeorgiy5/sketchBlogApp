@@ -2,6 +2,22 @@ import { Request, Response, NextFunction } from "express";
 
 import * as userService from "../services/user";
 
+export const getMyLikes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const userId = req.session.userId;
+
+  try {
+    const likedPosts = await userService.getMyLikes(userId);
+
+    res.status(200).json(likedPosts);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getUserPosts = async (
   req: Request,
   res: Response,

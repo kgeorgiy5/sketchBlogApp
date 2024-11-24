@@ -118,6 +118,20 @@ export const updatePost = async (
   return savedPost;
 };
 
+export const getMyLikes = async (userId: string | undefined) => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    const err: AppError = new Error("User not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const posts = await Post.find({ _id: { $in: [...user.likedPosts] } });
+
+  return posts;
+};
+
 export const likePost = async (
   postId: mongoose.Types.ObjectId,
   userId: SessionField<string>,
