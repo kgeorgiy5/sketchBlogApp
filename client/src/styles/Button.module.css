@@ -90,3 +90,8 @@
   background-color: #4dba41;
   color: var(--accent2);
 }
+
+.toolbar:disabled {
+  cursor: default;
+  background-color: #85a89b;
+}

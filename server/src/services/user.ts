@@ -10,6 +10,50 @@ export const getUserPosts = async (userId: SessionField<string>) => {
   return userPosts;
 };
 
+export const getUserData = async (userId: SessionField<string>) => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    const err: AppError = new Error(`User with id:${userId} not found`);
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return user;
+};
+
+export const isThisPostLiked = async (
+  userId: string | undefined,
+  postId: string,
+) => {
+  if (!userId) {
+    const err: AppError = new Error("Invalid user id");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const user = await User.findById(userId);
+  const post = await Post.findById(postId);
+
+  if (!user) {
+    const err: AppError = new Error("No such user");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  if (!post) {
+    const err: AppError = new Error("No such post");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  if (user.likedPosts.indexOf(post._id) !== -1) {
+    return true;
+  }
+
+  return false;
+};
+
 export const createNewPost = async (
   title: string,
   sketchBuffer: Buffer | undefined,
@@ -74,7 +118,21 @@ export const updatePost = async (
   return savedPost;
 };
 
-export const addLike = async (
+export const getMyLikes = async (userId: string | undefined) => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    const err: AppError = new Error("User not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const posts = await Post.find({ _id: { $in: [...user.likedPosts] } });
+
+  return posts;
+};
+
+export const likePost = async (
   postId: mongoose.Types.ObjectId,
   userId: SessionField<string>,
 ) => {
@@ -93,21 +151,23 @@ export const addLike = async (
     err.statusCode = 401;
     throw err;
   }
+  const updatedPost = post;
+  const updatedUser = user;
 
-  if (user.likedPosts.indexOf(postId) !== -1) {
-    const err: AppError = new Error(
-      `user ${userId} already liked post ${postId}`,
-    );
-    err.statusCode = 400;
-    err;
+  const likedPosts = user.likedPosts;
+
+  const likedPostIndex = user.likedPosts.indexOf(postId);
+
+  if (likedPostIndex !== -1) {
+    updatedPost.numberOfLikes = post.numberOfLikes - 1;
+    likedPosts.splice(likedPostIndex, 1);
+    updatedUser.likedPosts = likedPosts;
+  } else {
+    updatedPost.numberOfLikes = post.numberOfLikes + 1;
+    updatedUser.likedPosts.push(postId);
   }
 
-  const updatedPost = post;
-  updatedPost.numberOfLikes = post.numberOfLikes + 1;
-
-  const updatedUser = user;
-  updatedUser.likedPosts.push(postId);
-
   await updatedUser.save();
+
   return await updatedPost.save();
 };

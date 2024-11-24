@@ -54,8 +54,15 @@ const Navbar = () => {
             <Button variant={`${currentPath === "/" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("")} >Feed</Button>
             {isAuth ? (
                 <>
-                  <Button variant={`${currentPath === "/my-posts" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
-                  <Button variant={`${currentPath === "/sketch" ? "navbar--highlighted" : "navbar"}`} onClick={() => navigationButtonHandler("sketch")}>Sketch</Button>
+                  <Button
+                      variant={`${currentPath === "/my-posts" ? "navbar--highlighted" : "navbar"}`}
+                      onClick={() => navigationButtonHandler("my-posts")}>My posts</Button>
+                  <Button
+                      variant={`${currentPath === "/sketch" ? "navbar--highlighted" : "navbar"}`}
+                      onClick={() => navigationButtonHandler("sketch")}>Sketch</Button>
+                  <Button
+                      variant={`${currentPath === "/liked" ? "navbar--highlighted" : "navbar"}`}
+                      onClick={() => navigationButtonHandler("liked")}>Liked Posts</Button>
                 </>
             ): null}
           </div>
