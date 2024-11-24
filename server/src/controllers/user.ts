@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
 import * as userService from "../services/user";
-import { AppError } from "../types/error";
 
 export const getUserPosts = async (
   req: Request,
@@ -14,6 +13,39 @@ export const getUserPosts = async (
     const userPosts = await userService.getUserPosts(userId);
 
     res.status(200).json(userPosts);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUserData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const userId = req.session.userId;
+
+  try {
+    const userData = await userService.getUserData(userId);
+
+    res.status(200).json(userData);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const postCheckLiked = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const userId = req.session.userId;
+  const postId = req.body.postId;
+
+  try {
+    const isLiked = await userService.isThisPostLiked(userId, postId);
+
+    res.status(200).json(isLiked);
   } catch (err) {
     next(err);
   }
@@ -73,9 +105,9 @@ export const putLikePost = async (
   const userId = req.session.userId;
 
   try {
-    const updatedPost = await userService.addLike(postId, userId);
+    const updatedPost = await userService.likePost(postId, userId);
 
-    res.status(204).json(updatedPost);
+    res.status(200).json(updatedPost);
   } catch (err) {
     next(err);
   }

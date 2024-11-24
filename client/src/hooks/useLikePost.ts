@@ -1,17 +1,18 @@
 import getApiRoute from "../utils/getApiRoute.ts";
-import axios, {AxiosError} from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 import useError from "./useError.ts";
-import {genericCallbackType} from "../types/callbackTypes.ts";
+import {complexCallbackType} from "../types/callbackTypes.ts";
 
-const useLikePost = (postId:string, callback:genericCallbackType) => {
+const useLikePost = (postId:string, callback:complexCallbackType<number>) => {
     const errorHandler = useError();
 
     const endpoint = getApiRoute("like-post")
 
     return () => {
         axios.put(endpoint, {postId:postId}, {withCredentials:true})
-            .then(() => {
-                callback();
+            .then((res:AxiosResponse) => {
+                const numberOfLikes = res.data.numberOfLikes;
+                callback(numberOfLikes);
             })
             .catch((err:AxiosError) => {
             errorHandler(err);
