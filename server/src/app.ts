@@ -43,6 +43,12 @@ app.use(
     store: store,
     saveUninitialized: false,
     resave: false,
+      cookie:{
+        httpOnly:true,
+          secure:true,
+          sameSite:"none",
+          maxAge:3600000,
+      }
   }),
 );
 
