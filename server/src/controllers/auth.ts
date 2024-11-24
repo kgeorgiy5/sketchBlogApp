@@ -58,7 +58,6 @@ export const postSignIn = async (
 
     req.session.isAuthenticated = true;
     req.session.userId = user._id.toString();
-
     res.status(200).end();
   } catch (err) {
     next(err);
