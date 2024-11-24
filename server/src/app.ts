@@ -55,10 +55,9 @@ app.use("/", (req: express.Request, res: express.Response) => {
 });
 
 mongoose
-  .connect(MONGODB_URI,
-      {
-          tls: true,
-      })
+  .connect(MONGODB_URI, {
+      tls:true,
+  })
   .then(() => {
     app.listen(PORT, () => {
       console.log(`http://localhost:${PORT}`);
