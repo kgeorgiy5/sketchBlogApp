@@ -1,10 +1,5 @@
 const getApiRoute = (path: string) => {
-  let host:string;
-  if(import.meta.env.API_HOST){
-    host = process.env.API_HOST as string;
-  } else {
-    host = "http://localhost:8000";
-  }
+  const host:string = import.meta.env.VITE_API_HOST || "http://localhost:8000";
   return `${host}/api/${path}`;
 }
 
