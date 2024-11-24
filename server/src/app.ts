@@ -55,7 +55,10 @@ app.use("/", (req: express.Request, res: express.Response) => {
 });
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI,
+    {
+      ssl: true,
+    })
   .then(() => {
     app.listen(PORT, () => {
       console.log(`http://localhost:${PORT}`);
