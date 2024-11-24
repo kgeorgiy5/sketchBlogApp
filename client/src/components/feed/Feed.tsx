@@ -1,4 +1,4 @@
-import useGetPosts from "../../hooks/useGetPosts.ts";
+import useGetPosts, {IPost} from "../../hooks/useGetPosts.ts";
 import Post from "./Post.tsx";
 import styles from "../../styles/feed/Feed.module.css";
 
@@ -7,8 +7,8 @@ const Feed = () => {
   return (
       <div className={styles["feed"]}>
           {posts ? (<>
-              {posts.map((post:Post) => (
-                  <Post post={post} />
+              {posts.map((post:IPost) => (
+                  <Post key={post._id} post={post} />
               ))}
               </>) : null}
 

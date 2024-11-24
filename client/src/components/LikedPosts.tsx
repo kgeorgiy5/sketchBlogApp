@@ -10,7 +10,7 @@ const LikedPosts = () => {
     return(
         <div className={styles["feed"]}>
             {likedPosts.map((post:IPost) => (
-                <Post post={post} onLike={sendRequest} />
+                <Post key={post._id} post={post} onLike={sendRequest} />
             ))}
         </div>
     )
