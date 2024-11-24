@@ -46,7 +46,6 @@ const Navbar = () => {
     <>
       <nav className={styles["navbar"]}>
         <div className={styles["logo-area"]}>
-          {/* <img alt="logo" src="../../public/download (1).png" className={styles["logo"]} /> */}
           <h1 className={styles["logo"]}>sketchBlog</h1>
         </div>
         <div className={styles["navbar-buttons"]}>

@@ -10,7 +10,7 @@ const useLogout = () => {
     const dispatch = useDispatch();
 
     return () => {
-        axios.post(endpoint, {withCredentials: true}).then(() => {
+        axios.get(endpoint, {withCredentials: true}).then(() => {
             dispatch(setIsAuthenticated({isAuthenticated:false}));
         })
             .catch((err:AxiosError) => {

@@ -4,9 +4,10 @@ import * as authController from "../controllers/auth";
 
 const router = Router();
 
+router.get("/logout", authController.getLogout);
+router.get("/is-auth", authController.getIsAuth);
+
 router.post("/sign-in", authController.postSignIn);
 router.post("/sign-up", authController.postSignUp);
-router.post("/logout", authController.postLogout);
-router.get("/is-auth", authController.getIsAuth);
 
 export default router;

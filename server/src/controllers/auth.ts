@@ -65,7 +65,7 @@ export const postSignIn = async (
   }
 };
 
-export const postLogout = async (
+export const getLogout = async (
   req: Request,
   res: Response,
   next: NextFunction,
