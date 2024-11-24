@@ -71,6 +71,7 @@ export const postLogout = async (
   next: NextFunction,
 ) => {
   req.session.destroy(() => {
-    res.status(200).end();
+    res.status(200);
   });
+  res.end();
 };
