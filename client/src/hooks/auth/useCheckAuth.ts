@@ -1,4 +1,4 @@
-import axios, {AxiosError} from "axios";
+import axios from "axios";
 import {useDispatch} from "react-redux";
 
 import getApiRoute from "../../utils/getApiRoute.ts";
@@ -17,8 +17,7 @@ const useCheckAuth = () => {
             axios.get(userDataEndpoint, {withCredentials:true}).then(res => {
                 dispatch(setUserData({email:res.data.email, userId:res.data._id}));
             })
-        }).catch((err:AxiosError)=> {
-            console.log(err);
+        }).catch(()=> {
         });
     }, []);
 }
