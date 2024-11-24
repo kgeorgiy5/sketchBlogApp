@@ -27,7 +27,7 @@ const ErrorStack: FC = () => {
   }
 
   return (
-    <div className={`${styles["error-stack"]} ${errors[0] ? "" : "hidden"}`}>
+    <div className={`${styles["error-stack"]}`}>
       {errors[0] ? (
         <>
           {errors.map(errorMsg => (
