@@ -5,7 +5,6 @@ import {IPost} from "../hooks/useGetPosts.ts";
 
 const LikedPosts = () => {
     const [likedPosts, sendRequest] = useGetLikedPosts();
-    console.log(likedPosts);
 
     return(
         <div className={styles["feed"]}>

@@ -32,7 +32,7 @@ const useGetMyPosts = () => {
         sendRequest();
     }, []);
 
-    return [posts, setPosts, sendRequest];
+    return posts;
 }
 
 export default useGetMyPosts;

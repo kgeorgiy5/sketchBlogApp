@@ -3,14 +3,13 @@ import Post from "./Post.tsx";
 import styles from "../../styles/feed/Feed.module.css";
 
 const Feed = () => {
-    const posts = useGetPosts()[0];
+    const posts = useGetPosts();
+
   return (
       <div className={styles["feed"]}>
-          {posts ? (<>
-              {posts.map((post:IPost) => (
-                  <Post key={post._id} post={post} />
-              ))}
-              </>) : null}
+          {posts.length > 0 ? posts.map((post: IPost) => (
+              <Post key={post._id} post={post}/>
+          )) : null}
 
       </div>
   )

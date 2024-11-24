@@ -1,4 +1,4 @@
-import { buttonCallbackType, genericCallbackType, complexCallbackType } from "./callbackTypes"
+import { buttonCallbackType, genericCallbackType } from "./callbackTypes"
 
 export interface IAuthFormContainer {
   onClose: buttonCallbackType,
@@ -7,6 +7,5 @@ export interface IAuthFormContainer {
 
 export interface IAuthFormProps {
   onClose: genericCallbackType;
-  setErrorMessage: complexCallbackType<string>;
   toggleAuth: genericCallbackType;
 }

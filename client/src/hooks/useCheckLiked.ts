@@ -1,11 +1,11 @@
 import getApiRoute from "../utils/getApiRoute.ts";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import useError from "./useError.ts";
-import {useEffect, useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "../store/store.ts";
 
-const useCheckLiked = (postId:string|undefined) => {
+const useCheckLiked:(postId:string|undefined) => [boolean, Dispatch<SetStateAction<boolean>>] = (postId:string|undefined) => {
     const errorHandler = useError();
 
     const endpoint = getApiRoute("is-liked");
@@ -27,7 +27,8 @@ const useCheckLiked = (postId:string|undefined) => {
 
        axios.post(endpoint, {postId:postId}, {withCredentials: true})
            .then((res:AxiosResponse) => {
-               setIsLiked(res.data);
+               const isLikedData:boolean = res.data;
+               setIsLiked(isLikedData);
            })
            .catch((err:AxiosError) => {
                errorHandler(err);

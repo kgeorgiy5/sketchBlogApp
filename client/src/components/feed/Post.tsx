@@ -14,8 +14,7 @@ import useCheckLiked from "../../hooks/useCheckLiked.ts";
 
 interface IPostProps{
     post: IPost;
-    //FIXME: add type for this callback;
-    onLike?: any;
+    onLike?: () => void;
 }
 
 const Post:FC<IPostProps> = ({post, onLike}) => {
@@ -48,7 +47,7 @@ const Post:FC<IPostProps> = ({post, onLike}) => {
     const likeHandler = useLikePost(post._id,
         (numberOfLikes) => {
             setLikes(numberOfLikes);
-            setIsLiked(prevState => !prevState);
+            setIsLiked((prevState:boolean) => !prevState);
             setIsLikeDisabled(true);
             if(onLike){
                 onLike();

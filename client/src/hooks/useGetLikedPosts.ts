@@ -2,13 +2,14 @@ import getApiRoute from "../utils/getApiRoute.ts";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import useError from "./useError.ts";
 import {useEffect, useState} from "react";
+import {IPost} from "./useGetPosts.ts";
 
-const useGetLikedPosts = () => {
+const useGetLikedPosts:()=>[likedPosts:IPost[], sendRequest:() => void] = () => {
     const errorHandler = useError();
 
     const endpoint = getApiRoute("my-likes");
 
-    const [likedPosts, setLikedPosts] = useState([]);
+    const [likedPosts, setLikedPosts] = useState<IPost[]>([]);
 
     function sendRequest () {
         axios.get(endpoint, {withCredentials:true})
