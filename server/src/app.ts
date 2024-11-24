@@ -33,7 +33,7 @@ const corsOptions = {
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -66,7 +66,6 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
