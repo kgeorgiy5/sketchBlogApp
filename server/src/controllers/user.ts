@@ -75,11 +75,13 @@ export const postCreatePost = async (
   const title = req.body.title;
   const sketchBuffer = req.file?.buffer;
   const userId = req.session.userId;
+  const text:string = req.body.text;
 
   try {
     const savedPost = await userService.createNewPost(
       title,
       sketchBuffer,
+        text,
       userId,
     );
     res.status(200).json(savedPost);
@@ -95,6 +97,7 @@ export const putUpdatePost = async (
 ) => {
   const newTitle: string = req.body.title;
   const newContent: string = req.body.content;
+  const newText: string = req.body.text;
   const userId = req.session.userId;
   const postId = req.body.id;
 
@@ -103,6 +106,7 @@ export const putUpdatePost = async (
       postId,
       newTitle,
       newContent,
+      newText,
       userId,
     );
 
