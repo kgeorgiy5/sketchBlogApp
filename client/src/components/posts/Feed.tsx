@@ -1,6 +1,6 @@
-import useGetPosts, {IPost} from "../../hooks/useGetPosts.ts";
+import useGetPosts, {IPost} from "../../hooks/posts/useGetPosts.ts";
 import Post from "./Post.tsx";
-import styles from "../../styles/feed/Feed.module.css";
+import styles from "../../styles/posts/Feed.module.css";
 
 const Feed = () => {
     const posts = useGetPosts();

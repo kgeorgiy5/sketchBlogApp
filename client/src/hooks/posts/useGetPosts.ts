@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosResponse} from "axios";
-import getApiRoute from "../utils/getApiRoute.ts";
+import getApiRoute from "../../utils/getApiRoute.ts";
 import {useCallback, useEffect, useState} from "react";
-import useError from "./useError.ts";
+import useError from "../useError.ts";
 
 export interface IPost{
     _id: string;

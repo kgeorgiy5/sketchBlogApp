@@ -1,7 +1,7 @@
-import getApiRoute from "../utils/getApiRoute.ts";
+import getApiRoute from "../../utils/getApiRoute.ts";
 import axios, {AxiosError, AxiosResponse} from "axios";
-import useError from "./useError.ts";
-import {complexCallbackType} from "../types/callbackTypes.ts";
+import useError from "../useError.ts";
+import {complexCallbackType} from "../../types/callbackTypes.ts";
 
 const useLikePost = (postId:string, callback:complexCallbackType<number>) => {
     const errorHandler = useError();

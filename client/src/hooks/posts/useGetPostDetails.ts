@@ -1,11 +1,12 @@
-import getApiRoute from "../utils/getApiRoute.ts";
-import useError from "./useError.ts";
+import getApiRoute from "../../utils/getApiRoute.ts";
+import useError from "../useError.ts";
 import axios, {AxiosError} from "axios";
 import {useEffect, useState} from "react";
 
 export interface IPostDetails{
     _id:string;
     title:string;
+    text:string;
     content:string;
     numberOfLikes:number;
     email:string;
@@ -30,6 +31,7 @@ const useGetPostDetails = (id:string|undefined) => {
             const postDetailsData:IPostDetails = {
                 _id:res.data._id,
                 title:res.data.title,
+                text: res.data.text,
                 content:res.data.content,
                 numberOfLikes:res.data.numberOfLikes,
                 email:res.data.email,

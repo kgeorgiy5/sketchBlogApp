@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 
-import ErrorPopUp from "./ErrorPopUp";
-import styles from "../styles/ErrorStack.module.css";
+import ErrorPopUp from "./ErrorPopUp.tsx";
+import styles from "../../styles/error/ErrorStack.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../store/store.ts";
-import {setErrorMessage} from "../reducers/errorReducer.ts";
+import {RootState} from "../../store/store.ts";
+import {setErrorMessage} from "../../reducers/errorReducer.ts";
 
 const ErrorStack: FC = () => {
   const dispatch = useDispatch();

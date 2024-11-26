@@ -143,7 +143,7 @@ export const likePost = async (
   const post = await Post.findById(postId);
 
   if (!post) {
-    const err: AppError = new Error("post not found");
+    const err: AppError = new Error("Post not found");
     err.statusCode = 404;
     throw err;
   }
@@ -151,8 +151,8 @@ export const likePost = async (
   const user = await User.findById(userId);
 
   if (!user) {
-    const err: AppError = new Error("user not found");
-    err.statusCode = 401;
+    const err: AppError = new Error("User not found");
+    err.statusCode = 404;
     throw err;
   }
   const updatedPost = post;

@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import { complexCallbackType } from "../../types/callbackTypes";
-import styles from "../../styles/sketch/ColorButton.module.css";
+import { complexCallbackType } from "../../../types/callbackTypes.ts";
+import styles from "../../../styles/user/sketch/ColorButton.module.css";
 
 interface IColorButton {
   onClick: complexCallbackType<string>;

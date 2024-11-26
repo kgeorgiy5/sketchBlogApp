@@ -29,6 +29,7 @@ export const getPostDetails = async (postId: string) => {
     _id: postId,
     email: postAuthor.email,
     title: post.title,
+    text: post.text,
     content: post.content,
     updateDate: post.updateDate,
     numberOfLikes: post.numberOfLikes,

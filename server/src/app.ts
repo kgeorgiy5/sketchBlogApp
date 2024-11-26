@@ -47,7 +47,7 @@ app.use(
       cookie:{
         httpOnly:true,
           sameSite:"lax",
-          maxAge:3600000,
+          maxAge:36000000,
       }
   }),
 );
