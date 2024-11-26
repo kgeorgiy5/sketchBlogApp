@@ -57,6 +57,7 @@ export const isThisPostLiked = async (
 export const createNewPost = async (
   title: string,
   sketchBuffer: Buffer | undefined,
+  text:string,
   userId: SessionField<string>,
 ) => {
   const updateDate = new Date();
@@ -75,6 +76,7 @@ export const createNewPost = async (
     updateDate: updateDate,
     userId: userId,
     numberOfLikes: 0,
+    text: text,
   });
 
   const savedPost = await newPost.save();
@@ -86,6 +88,7 @@ export const updatePost = async (
   postId: string,
   title: string,
   content: string,
+  text:string,
   userId: SessionField<string>,
 ) => {
   const updateDate = new Date();
@@ -111,6 +114,7 @@ export const updatePost = async (
   const updatedPost = post;
   updatedPost.title = title;
   updatedPost.content = content;
+  updatedPost.text = text;
   updatedPost.updateDate = updateDate;
 
   const savedPost = await updatedPost.save();
@@ -139,7 +143,7 @@ export const likePost = async (
   const post = await Post.findById(postId);
 
   if (!post) {
-    const err: AppError = new Error("post not found");
+    const err: AppError = new Error("Post not found");
     err.statusCode = 404;
     throw err;
   }
@@ -147,8 +151,8 @@ export const likePost = async (
   const user = await User.findById(userId);
 
   if (!user) {
-    const err: AppError = new Error("user not found");
-    err.statusCode = 401;
+    const err: AppError = new Error("User not found");
+    err.statusCode = 404;
     throw err;
   }
   const updatedPost = post;

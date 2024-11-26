@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import styles from "../styles/ErrorPopUp.module.css";
-import IErrorProps from "../types/IErrorProps";
+import styles from "../../styles/error/ErrorPopUp.module.css";
+import IErrorProps from "../../types/IErrorProps.ts";
 
 const ErrorPopUp = ({ message, onDelete }: IErrorProps) => {
   const [showError, setShowError] = useState<boolean>(true);

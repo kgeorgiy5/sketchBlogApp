@@ -1,9 +1,9 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 
-import styles from "../../styles/sketch/SketchCanvas.module.css";
-import Toolbar from "./Toolbar";
-import Button from "../Button";
+import styles from "../../../styles/user/sketch/SketchCanvas.module.css";
+import Toolbar from "./Toolbar.tsx";
+import Button from "../../Button.tsx";
 
 interface ISketchCanvasProps {
   onSave: (image: Blob) => void;
@@ -29,7 +29,7 @@ const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const [canvasSizeCoefs, setCanvasSizeCoefs] = useState({ x: 1, y: 1 });
+  const [canvasSizeCoefs, setcanvasSizeCoefs] = useState({ x: 1, y: 1 });
 
   const [lineColor, setLineColor] = useState<string>(defaultLineConfig.lineColor);
   const [lineWidth, setLineWidth] = useState<number>(defaultLineConfig.lineWidth);
@@ -55,7 +55,7 @@ const SketchCanvas: FC<ISketchCanvasProps> = ({ onSave }) => {
     context.fillStyle = "#E2F1E7";
     context.fillRect(0, 0, canvasResolution.x, canvasResolution.y);
 
-    setCanvasSizeCoefs({ x: widthCoef, y: heightCoef });
+    setcanvasSizeCoefs({ x: widthCoef, y: heightCoef });
   }, [canvasResolution.x, canvasResolution.y])
 
 

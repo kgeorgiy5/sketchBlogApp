@@ -1,8 +1,8 @@
-import getApiRoute from "../utils/getApiRoute.ts";
+import getApiRoute from "../../utils/getApiRoute.ts";
 import axios, {AxiosError, AxiosResponse} from "axios";
-import useError from "./useError.ts";
+import useError from "../useError.ts";
 import {useEffect, useState} from "react";
-import {IPost} from "./useGetPosts.ts";
+import {IPost} from "../posts/useGetPosts.ts";
 
 const useGetLikedPosts:()=>[likedPosts:IPost[], sendRequest:() => void] = () => {
     const errorHandler = useError();

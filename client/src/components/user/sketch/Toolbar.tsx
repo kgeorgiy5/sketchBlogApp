@@ -3,11 +3,11 @@ import { LuBrush, LuEraser, LuPen } from "react-icons/lu";
 import { PiNoteBlankBold } from "react-icons/pi";
 import { FaCircle } from "react-icons/fa6";
 
-import Button from "../Button";
-import { BrushType, ILineConfig } from "./SketchCanvas";
-import ColorPalette from "./ColorPalette";
-import styles from "../../styles/sketch/Toolbar.module.css";
-import { genericCallbackType } from "../../types/callbackTypes";
+import Button from "../../Button.tsx";
+import { BrushType, ILineConfig } from "./SketchCanvas.tsx";
+import ColorPalette from "./ColorPalette.tsx";
+import styles from "../../../styles/user/sketch/Toolbar.module.css";
+import { genericCallbackType } from "../../../types/callbackTypes.ts";
 
 interface IToolbarProps {
   setLineColor: (color: string) => void;

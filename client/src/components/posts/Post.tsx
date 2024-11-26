@@ -4,13 +4,13 @@ import { FiDownload } from "react-icons/fi";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 import { LuMoreHorizontal } from "react-icons/lu";
 
-import {IPost} from "../../hooks/useGetPosts.ts";
-import styles from "../../styles/feed/Post.module.css";
+import {IPost} from "../../hooks/posts/useGetPosts.ts";
+import styles from "../../styles/posts/Post.module.css";
 import Button from "../Button.tsx";
-import useLikePost from "../../hooks/useLikePost.ts";
+import useLikePost from "../../hooks/user/useLikePost.ts";
 import {useNavigate} from "react-router-dom";
 import getPostUrl from "../../utils/getPostUrl.ts";
-import useCheckLiked from "../../hooks/useCheckLiked.ts";
+import useCheckLiked from "../../hooks/user/useCheckLiked.ts";
 
 interface IPostProps{
     post: IPost;

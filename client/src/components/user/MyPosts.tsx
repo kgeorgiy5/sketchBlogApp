@@ -1,7 +1,7 @@
-import styles from "../../styles/feed/Feed.module.css";
-import useGetMyPosts from "../../hooks/useGetMyPosts.ts";
-import Post from "../feed/Post.tsx";
-import {IPost} from "../../hooks/useGetPosts.ts";
+import styles from "../../styles/posts/Feed.module.css";
+import useGetMyPosts from "../../hooks/user/useGetMyPosts.ts";
+import Post from "../posts/Post.tsx";
+import {IPost} from "../../hooks/posts/useGetPosts.ts";
 
 const MyPosts = () => {
     const posts = useGetMyPosts();

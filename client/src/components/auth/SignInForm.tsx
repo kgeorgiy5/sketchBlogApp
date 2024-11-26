@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IAuthFormProps } from "../../types/auth";
 import FormInput from "../FormInput";
 import Button from "../Button";
-import styles from "../../styles/AuthForm.module.css";
+import styles from "../../styles/auth/AuthForm.module.css";
 import useSignIn from "../../hooks/auth/useSignIn.ts";
 
 const SignInForm = ({ onClose, toggleAuth}: IAuthFormProps) => {

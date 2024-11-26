@@ -1,5 +1,5 @@
-import getApiRoute from "../utils/getApiRoute.ts";
-import useError from "./useError.ts";
+import getApiRoute from "../../utils/getApiRoute.ts";
+import useError from "../useError.ts";
 import {useEffect, useState} from "react";
 import axios, {AxiosError} from "axios";
 

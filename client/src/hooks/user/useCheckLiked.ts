@@ -1,9 +1,9 @@
-import getApiRoute from "../utils/getApiRoute.ts";
+import getApiRoute from "../../utils/getApiRoute.ts";
 import axios, {AxiosError, AxiosResponse} from "axios";
-import useError from "./useError.ts";
+import useError from "../useError.ts";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {RootState} from "../store/store.ts";
+import {RootState} from "../../store/store.ts";
 
 const useCheckLiked:(postId:string|undefined) => [boolean, Dispatch<SetStateAction<boolean>>] = (postId:string|undefined) => {
     const errorHandler = useError();

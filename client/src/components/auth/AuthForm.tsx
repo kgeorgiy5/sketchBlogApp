@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 
-import styles from "../../styles/AuthForm.module.css";
+import styles from "../../styles/auth/AuthForm.module.css";
 import { IAuthFormContainer } from "../../types/auth";
 import Backdrop from '../Backdrop';
 import SignUpForm from "./SignUpForm";

@@ -1,8 +1,8 @@
 import { FC, ChangeEvent } from "react";
 
-import { complexCallbackType } from "../../types/callbackTypes";
-import ColorButton from "./ColorButton";
-import styles from "../../styles/sketch/ColorPalette.module.css";
+import { complexCallbackType } from "../../../types/callbackTypes.ts";
+import ColorButton from "./ColorButton.tsx";
+import styles from "../../../styles/user/sketch/ColorPalette.module.css";
 
 interface IColorPalette {
   onChange: complexCallbackType<string>;

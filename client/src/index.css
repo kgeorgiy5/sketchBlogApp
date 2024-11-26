@@ -22,6 +22,24 @@ body {
   display: none !important;
 }
 
+::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--accent1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main1);
+  border-radius: 1rem;
+  cursor: default;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--main2);
+}
+
 @keyframes rollout {
   0% {
     transform: translateY(-100px);
