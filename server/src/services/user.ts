@@ -175,3 +175,27 @@ export const likePost = async (
 
   return await updatedPost.save();
 };
+
+export const removePost = async (postId:string|undefined, userId:string|undefined) => {
+  if(!userId){
+    const err:AppError = new Error("Unauthorized");
+    err.statusCode = 401;
+    throw err;
+  }
+
+  const post = await Post.findById(postId);
+
+  if(!post){
+    const err:AppError = new Error("Post not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  if(post.userId.toString() !== userId){
+    const err:AppError = new Error("You are not authorized to delete this post");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  await Post.findByIdAndDelete(postId);
+}

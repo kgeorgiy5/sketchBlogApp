@@ -21,4 +21,6 @@ router.post("/is-liked", userController.postCheckLiked);
 router.put("/edit-post", userController.putUpdatePost);
 router.put("/like-post", userController.putLikePost);
 
+router.delete("/delete-post/:postId", userController.deletePost)
+
 export default router;

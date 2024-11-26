@@ -132,3 +132,16 @@ export const putLikePost = async (
     next(err);
   }
 };
+
+export const deletePost = async (req: Request, res: Response, next:NextFunction) => {
+  const userId = req.session.userId;
+  const postId = req.params.postId;
+
+  try{
+    await userService.removePost(postId, userId);
+
+    res.status(200).end();
+  } catch(err){
+    next(err);
+  }
+}
