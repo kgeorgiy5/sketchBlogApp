@@ -3,6 +3,8 @@ import { HiOutlineShare } from "react-icons/hi";
 import { FiDownload } from "react-icons/fi";
 import {FaHeart, FaRegHeart} from "react-icons/fa";
 import { LuMoreHorizontal } from "react-icons/lu";
+import { MdDeleteOutline } from "react-icons/md";
+;
 
 import {IPost} from "../../hooks/posts/useGetPosts.ts";
 import styles from "../../styles/posts/Post.module.css";
@@ -11,6 +13,9 @@ import useLikePost from "../../hooks/user/useLikePost.ts";
 import {useNavigate} from "react-router-dom";
 import getPostUrl from "../../utils/getPostUrl.ts";
 import useCheckLiked from "../../hooks/user/useCheckLiked.ts";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store.ts";
+import useDeletePost from "../../hooks/user/useDeletePost.ts";
 
 interface IPostProps{
     post: IPost;
@@ -20,6 +25,12 @@ interface IPostProps{
 const Post:FC<IPostProps> = ({post, onLike}) => {
     const navigate = useNavigate();
 
+    const userId = useSelector((state:RootState) => state.user.userId);
+    const deletePost = useDeletePost(post._id);
+
+    console.log(userId);
+    console.log(post.userId);
+
     const [likes, setLikes] = useState<number>(post.numberOfLikes);
 
     const [isLiked, setIsLiked] = useCheckLiked(post._id);
@@ -27,7 +38,6 @@ const Post:FC<IPostProps> = ({post, onLike}) => {
 
     const detailsHandler = () => {
         const path = `/post/${post._id}`
-
         navigate(path);
     }
 
@@ -71,6 +81,11 @@ const Post:FC<IPostProps> = ({post, onLike}) => {
                    link={`data:image/jpeg;base64,${post.content}`}
                    variant={"toolbar"}>{<FiDownload size="1rem"/>}</Button>
                <Button onClick={shareHandler} variant={"toolbar"}><HiOutlineShare size="1rem"/></Button>
+               {userId.toString() === post.userId.toString() ? (
+                   <>
+                       <Button variant="toolbar" onClick={deletePost}><MdDeleteOutline size="1rem"/></Button>
+                   </>
+               ) : null}
                <Button onClick={detailsHandler} variant={"toolbar"}><LuMoreHorizontal size="1rem"/></Button>
            </div>
        </div>
