@@ -2,6 +2,7 @@ import Post from "../models/post";
 import { AppError } from "../types/error";
 import User from "../models/user";
 import sharp from "sharp";
+import compressImage from "../utils/compressImage";
 
 export const getAllPosts = async () => {
   const compressedPosts = [];
@@ -12,9 +13,7 @@ export const getAllPosts = async () => {
     const compressedPost = {_id:post._id, title: post.title, numberOfLikes: post.numberOfLikes, updatedAt: post.updateDate, userId:post.userId, content:""};
 
     try{
-      const imgBuffer = Buffer.from(post.content, "base64");
-      const compressedImgBuffer = await sharp(imgBuffer).resize({width:300, height:300}).toBuffer();
-      compressedPost.content = compressedImgBuffer.toString("base64");
+      compressedPost.content = await compressImage(post.content);
     } catch{
       const err:AppError = new Error("Internal Server Error");
       err.statusCode = 500;

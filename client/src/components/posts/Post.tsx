@@ -28,9 +28,6 @@ const Post:FC<IPostProps> = ({post, onLike}) => {
     const userId = useSelector((state:RootState) => state.user.userId);
     const deletePost = useDeletePost(post._id);
 
-    console.log(userId);
-    console.log(post.userId);
-
     const [likes, setLikes] = useState<number>(post.numberOfLikes);
 
     const [isLiked, setIsLiked] = useCheckLiked(post._id);

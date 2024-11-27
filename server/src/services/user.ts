@@ -3,11 +3,27 @@ import User from "../models/user";
 import { AppError } from "../types/error";
 import { SessionField } from "../types/auth";
 import mongoose from "mongoose";
+import compressImage from "../utils/compressImage";
 
 export const getUserPosts = async (userId: SessionField<string>) => {
+  const compressedPosts = [];
   const userPosts = (await Post.find({ userId: userId })) || [];
 
-  return userPosts;
+  for(const post of userPosts) {
+    const compressedPost = {_id:post._id, title: post.title, numberOfLikes: post.numberOfLikes, updatedAt: post.updateDate, userId:post.userId, content:""};
+
+    try{
+      compressedPost.content = await compressImage(post.content);
+    } catch{
+      const err:AppError = new Error("Internal Server Error");
+      err.statusCode = 500;
+      throw err;
+    }
+
+    compressedPosts.push(compressedPost);
+  }
+
+  return compressedPosts;
 };
 
 export const getUserData = async (userId: SessionField<string>) => {
@@ -132,8 +148,23 @@ export const getMyLikes = async (userId: string | undefined) => {
   }
 
   const posts = await Post.find({ _id: { $in: [...user.likedPosts] } });
+  const compressedPosts = [];
 
-  return posts;
+  for(const post of posts) {
+    const compressedPost = {_id:post._id, title: post.title, numberOfLikes: post.numberOfLikes, updatedAt: post.updateDate, userId:post.userId, content:""};
+
+    try{
+      compressedPost.content = await compressImage(post.content);
+    } catch{
+      const err:AppError = new Error("Internal Server Error");
+      err.statusCode = 500;
+      throw err;
+    }
+
+    compressedPosts.push(compressedPost);
+  }
+
+  return compressedPosts;
 };
 
 export const likePost = async (
