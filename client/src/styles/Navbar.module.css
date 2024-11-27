@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   display: flex;
-  width: 100%;
+  width: max(100%, 100vh);
   height: 5rem;
   overflow: hidden;
   align-items: center;

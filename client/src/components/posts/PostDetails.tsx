@@ -21,8 +21,6 @@ export default function(){
         navigator.clipboard.writeText(url);
     }
 
-    console.log(postDetails);
-
     return (
         <div className={styles["post-main"]}>
             {postDetails ? (

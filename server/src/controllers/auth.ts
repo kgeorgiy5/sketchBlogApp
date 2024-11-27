@@ -39,7 +39,7 @@ export const postSignUp = async (
     req.session.isAuthenticated = true;
     req.session.userId = savedUser._id.toString();
 
-    res.status(200).end();
+    res.status(200).json(savedUser);
   } catch (err) {
     next(err);
   }
@@ -58,7 +58,7 @@ export const postSignIn = async (
 
     req.session.isAuthenticated = true;
     req.session.userId = user._id.toString();
-    res.status(200).end();
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }
