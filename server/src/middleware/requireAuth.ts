@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from "../types/error";
 
 const requireAuth = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.get("Authorization");
+  const authHeader = req.headers["Authorization"];
   if(!authHeader) {
     const err: AppError = new Error("Unauthorized");
     err.statusCode = 401;
