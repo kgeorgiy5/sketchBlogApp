@@ -4,6 +4,13 @@ import User from "../models/user";
 import { AppError } from "../types/error";
 
 export const createUser = async (email: string, password: string) => {
+
+  if(!email || !password){
+    const err: AppError = new Error("No email or password provided");
+    err.statusCode = 400;
+    throw err;
+  }
+
   const existingEmail = await User.find({ email: email });
 
   if (existingEmail[0]) {
@@ -33,6 +40,12 @@ export const createUser = async (email: string, password: string) => {
 };
 
 export const loginUser = async (email: string, password: string) => {
+  if(!email || !password){
+    const err: AppError = new Error("No email or password provided");
+    err.statusCode = 400;
+    throw err;
+  }
+
   const user = await User.findOne({ email: email });
 
   if (!user) {

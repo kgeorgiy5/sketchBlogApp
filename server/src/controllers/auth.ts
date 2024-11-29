@@ -8,14 +8,20 @@ export const getIsAuth = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const isAuth = req.session.isAuthenticated;
-  if (isAuth) {
-    res.status(200).json({ isAuth: !!isAuth });
-  } else {
-    const err: AppError = new Error("Not authorized");
+  if(!req.session){
+    const err: AppError = new Error("Session data is missing")
     err.statusCode = 401;
-    next(err);
+    return next(err);
   }
+
+  const isAuth = req.session.isAuthenticated;
+  if(!isAuth){
+    const err: AppError = new Error("Unauthorized");
+    err.statusCode = 401;
+    return next(err);
+  }
+
+  res.status(200).json({ isAuth: isAuth });
 };
 
 export const postSignUp = async (
@@ -25,13 +31,6 @@ export const postSignUp = async (
 ) => {
   const email: string = req.body.email;
   const password: string = req.body.password;
-  // const errors = validationResult(req);
-
-  // if (!errors.isEmpty()) {
-  //   const err: AppError = new Error("validation error");
-  //   err.statusCode = 422;
-  //   return next(err);
-  // }
 
   try {
     const savedUser = await createUser(email, password);
